@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PostsComponent } from './components/posts/posts.component';
+import { MainComponent } from './layout/main/main.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: 'posts', pathMatch: 'full' },
+  { path: '', component: MainComponent, children: [
+    { path: 'posts', component: PostsComponent }
+  ]},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
