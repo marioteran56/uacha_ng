@@ -7,8 +7,11 @@ import { MainComponent } from './layout/main/main.component';
 import { HeaderComponent } from './layout/main/header/header.component';
 import { MenuComponent } from './layout/main/menu/menu.component';
 import { PostsComponent } from './components/posts/posts.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MegaMenuModule } from 'primeng/megamenu';
+import { MenubarModule } from 'primeng/menubar';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FileUploadModule } from 'primeng/fileupload';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,9 +24,12 @@ import { MegaMenuModule } from 'primeng/megamenu';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule,
     AppRoutingModule,
-    MegaMenuModule
+    MegaMenuModule,
+    MenubarModule,
+    NgbModule,
+    FileUploadModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

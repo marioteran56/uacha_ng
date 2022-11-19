@@ -1,0 +1,16 @@
+.nav-link, .dropdown-item {
+    color: #3f3f3f;
+}
+
+.nav-link:hover {
+    color: #5E2FBB;
+}
+
+.dropdown-menu {
+    border: none;
+}
+
+.dropdown-item:hover {
+    background-color: white;
+    color: #5E2FBB;
+}
