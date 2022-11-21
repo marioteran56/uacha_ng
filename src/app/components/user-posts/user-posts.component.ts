@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-posts',
-  templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  selector: 'app-user-posts',
+  templateUrl: './user-posts.component.html',
+  styleUrls: ['./user-posts.component.css']
 })
-export class PostsComponent implements OnInit {
+export class UserPostsComponent implements OnInit {
 
   uploaded: boolean = false;
   imageUrl: any;
