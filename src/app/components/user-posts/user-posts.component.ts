@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
   selector: 'app-user-posts',
@@ -12,14 +13,18 @@ export class UserPostsComponent implements OnInit {
   uploaded: boolean = false;
   imageUrl: any;
   tags: String[] = [];
+  posts: any[] = [];
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private postsService: PostsService) {
     // customize default values of modals used by this component tree
 		config.backdrop = 'static';
 		config.keyboard = false;
   }
 
   ngOnInit(): void {
+    this.postsService.getPosts().subscribe((res) => {
+      this.posts = <any[]>res.posts;
+    });
   }
 
   open(content: any) {

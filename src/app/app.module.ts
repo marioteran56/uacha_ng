@@ -14,6 +14,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { HttpClientModule } from '@angular/common/http';
 import { ImageModule } from 'primeng/image';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { PostInfoComponent } from './components/post-info/post-info.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
     HeaderComponent,
     MenuComponent,
     PostsComponent,
-    UserPostsComponent
+    UserPostsComponent,
+    PostInfoComponent
   ],
   imports: [
     BrowserModule,

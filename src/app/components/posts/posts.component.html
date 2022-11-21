@@ -8,61 +8,16 @@
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100 border-bottom">
+        <div *ngFor="let post of posts" class="col">
+            <div class="card border-bottom">
                 <div class="card-img">
                     <img src="assets/images/becas.jpeg" class="card-img-top" alt="Post Image"/>
                 </div>
                 <div class="card-body pt-4">
-                  <h5 class="card-title">Beca Extraordinaria</h5>
-                  <p class="card-text pb-3">Publica UACH convocatoria para Becas extraordinarias Covid-19 Conoce más en facebook.</p>
+                  <h5 class="card-title">{{post.title}}</h5>
+                  <p class="card-text pb-3">{{post.content}}</p>
                   <div class="card-footer pb-4">
-                    <small class="fw-semibold text-start">#becas #alumnos #eventos</small>
-                  </div>
-                </div>
-                <a href="#" class="stretched-link"></a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 border-bottom">
-                <div class="card-img">
-                    <img src="assets/images/becas.jpeg" class="card-img-top" alt="Post Image">
-                </div>
-                <div class="card-body pt-4">
-                  <h5 class="card-title">Beca Extraordinaria</h5>
-                  <p class="card-text pb-3">Publica UACH convocatoria para Becas extraordinarias Covid-19 Conoce más en facebook.</p>
-                  <div class="card-footer pb-4">
-                    <small class="fw-semibold text-start">#becas #alumnos #eventos</small>
-                  </div>
-                </div>
-                <a href="#" class="stretched-link"></a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 border-bottom">
-                <div class="card-img">
-                    <img src="assets/images/becas.jpeg" class="card-img-top" alt="Post Image">
-                </div>
-                <div class="card-body pt-4">
-                  <h5 class="card-title">Beca Extraordinaria</h5>
-                  <p class="card-text pb-3">Publica UACH convocatoria para Becas extraordinarias Covid-19 Conoce más en facebook.</p>
-                  <div class="card-footer pb-4">
-                    <small class="fw-semibold text-start">#becas #alumnos #eventos</small>
-                  </div>
-                </div>
-                <a href="#" class="stretched-link"></a>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100 border-bottom">
-                <div class="card-img d-flex justify-content-center align-items-center">
-                    <img src="assets/images/becas.jpeg" class="card-img-top" alt="Post Image">
-                </div>
-                <div class="card-body pt-4">
-                  <h5 class="card-title">Beca Extraordinaria</h5>
-                  <p class="card-text pb-3">Publica UACH convocatoria para Becas extraordinarias Covid-19 Conoce más en facebook.</p>
-                  <div class="card-footer pb-4">
-                    <small class="fw-semibold text-start">#becas #alumnos #eventos</small>
+                    <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{tag}} </small>
                   </div>
                 </div>
                 <a href="#" class="stretched-link"></a>
@@ -71,7 +26,7 @@
     </div>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-	<div class="modal-header border-0 ps-5 pe-5">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
 		<h4 class="modal-title fs-4" id="modal-basic-title">Nueva Publicación</h4>
 		<a class="btn btn-close" aria-label="Close" (click)="onUploadClose(); d('Cross click')"></a>
 	</div>
@@ -86,11 +41,11 @@
         </div>
 		<div class="mt-4 mb-4">
             <h4 class="fs-5">Titulo</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título">
+            <input #postTitle type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título">
         </div>
         <div class="mb-4">
             <h4 class="fs-5">Contenido</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación">
+            <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación">
         </div>
         <div>
             <h4 class="fs-5">Tags</h4>
@@ -105,7 +60,7 @@
             </div>
         </div>
 	</div>
-	<div class="modal-footer border-0 ps-5 pe-5">
-        <button type="button" class="btn btn-dark fs-6" (click)="c('Save click')">Publicar</button>
+	<div class="modal-footer border-0 ps-5 pe-5 pb-5">
+        <button type="button" class="btn btn-dark fs-6" (click)="addPost(postTitle, postContent); c('Save click')">Publicar</button>
 	</div>
 </ng-template>

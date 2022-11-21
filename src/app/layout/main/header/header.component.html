@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center p-3">
-    <img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/>
-    <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+    <a href="posts" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
+    <button type="button" class="btn btn-white" (click)="openUserInfo(user)"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></button>
 </div>
 <nav class="navbar navbar-expand-lg bg-white p-3 border-top border-bottom">
     <div class="collapse navbar-collapse">
@@ -59,3 +59,27 @@
         </ul>
     </div>
 </nav>
+<ng-template #user let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Acerca de</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <h4 class="fs-5 mb-3" style="color: #5E2FBB;">marioteran56</h4>
+        <div class="mb-4">
+            <h4 class="fs-5">Nombre</h4>
+            <p class="fs-5">Mario Alberto Terán Acosta</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Cumpleaños</h4>
+            <p class="fs-5">29 Agosto, 2001</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Genero</h4>
+            <p class="fs-5">Masculino</p>
+        </div>
+        <div class="pt-4 border-top fs-5">
+            <p>Alumno de ciencias de la computación... Graduenme porfavor</p>
+        </div>
+	</div>
+</ng-template>

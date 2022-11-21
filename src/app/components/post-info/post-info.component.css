@@ -1,0 +1,23 @@
+#post-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    overflow: hidden;
+}
+
+#post-img p-image {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+#tags button {
+    background-color: #5E2FBB;
+    pointer-events: none;
+    border-color: #5E2FBB;
+}
+
+.modal-body p {
+    color: #3F3F3F;
+}

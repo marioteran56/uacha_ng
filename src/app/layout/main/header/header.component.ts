@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-header',
@@ -7,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(config: NgbModalConfig, private modalService: NgbModal) { }
 
   ngOnInit(): void {
 
+  }
+
+  openUserInfo(content: any) {
+    this.modalService.open(content);
   }
 
 }

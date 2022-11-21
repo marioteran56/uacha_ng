@@ -1,0 +1,99 @@
+<div class="col w-100 h-100">
+    <div class="row pb-4">
+        <h3 class="fs-4 text-start">{{post.title}}</h3>
+    </div>
+    <div class="row" id="post-img">
+        <p-image src={{post.multimedia}} alt="Post Image" [preview]="true" [style]="{'width': '100%'}" width="100%"></p-image>
+    </div>
+    <div class="row fs-4 mt-4">
+        <a class="col-9 d-flex text-dark align-items-center justify-content-start" href="#" style="text-decoration: none;">
+            <i class="bi bi-person-circle"></i>
+            <h5 class="mt-1 ms-2 text-start"><span id="userName" class="fw-light">marioteran56/</span>Mario Alberto Terán Acosta</h5>
+        </a>
+        <div class="col-3 d-flex align-items-center justify-content-end">
+            <div *ngIf="post.votes > 0; else negativeVotes">
+                <p class="fs-5 mt-3 me-2 text-success">+{{post.votes}}</p>
+            </div>
+            <ng-template #negativeVotes>
+                <p class="fs-5 mt-3 me-2 text-danger">{{post.votes}}</p>
+            </ng-template>
+            <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-up"></i></button>
+            <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-down"></i></button>
+            <button type="button" class="btn btn-white fs-5" (click)="openComments(comments)"><i class="bi bi-chat"></i></button>
+        </div>
+    </div>
+    <div id="tags" class="row">
+        <div class="mt-3">
+            <button *ngFor="let tag of post.tags" type="button" class="btn btn-dark me-2">#{{tag}}</button>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <p class="fs-4">{{post.content}}</p>
+    </div>
+</div>
+<ng-template #comments let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Comentarios</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <div class="mb-4">
+            <h4 class="fs-5">Contenido</h4>
+            <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escribe un comentario">
+            <div class="d-flex align-items-center justify-content-end">
+                <button type="button" class="btn btn-dark fs-6 mt-3">Comentar</button>
+            </div>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">marioteran56</h4>
+            <p class="fs-5">No creo que todos los alumnos aprovechen estas becas...</p>
+            <div class="d-flex">
+                <div class="vr"></div>
+                <div class="flex-fill ms-5">
+                    <div>
+                        <h4 class="fs-5">pineda24</h4>
+                        <p class="fs-5">Pues talvez nomas alumnos como tu</p>
+                    </div>
+                    <div>
+                        <h4 class="fs-5">marioteran56</h4>
+                        <p class="fs-5">Tienes algun problema?</p>
+                    </div>
+                    <div>
+                        <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escribe un comentario">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <button type="button" class="btn btn-dark fs-6 mt-3">Comentar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4 class="fs-5">pineda24</h4>
+            <p class="fs-5">A mi me gustan mucho las galletas</p>
+        </div>
+	</div>
+</ng-template>
+<ng-template #user let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Acerca de</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <h4 class="fs-5 mb-3" style="color: #5E2FBB;">marioteran56</h4>
+        <div class="mb-4">
+            <h4 class="fs-5">Nombre</h4>
+            <p class="fs-5">Mario Alberto Terán Acosta</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Cumpleaños</h4>
+            <p class="fs-5">29 Agosto, 2001</p>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Genero</h4>
+            <p class="fs-5">Masculino</p>
+        </div>
+        <div class="pt-4 border-top">
+            <p>Alumno de ciencias de la computación... Graduenme porfavor</p>
+        </div>
+	</div>
+</ng-template>
