@@ -1,0 +1,48 @@
+{
+    "categories": [
+        {
+            "title": "Facultades",
+            "description": "Publicaciones relacionadass con facultades especificas y asuntos internos sociales.",
+            "topics": [
+                "Ingeniería",
+                "Derecho",
+                "Química",
+                "Medicina"
+            ]
+        },
+        {
+            "title": "Admisión",
+            "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+            "topics": [
+                "Inscripciones",
+                "Becas",
+                "Convocatorias"
+            ]
+        },
+        {
+            "title": "Prácticas",
+            "description": "Publicaciones relacionadass con prácticas profesionales y oportunidades para los estudiantes.",
+            "topics": [
+                "Asociados",
+                "Laboratorios"
+            ]
+        },
+        {
+            "title": "Servicio Social",
+            "description": "Publicaciones relacionadass con actividades válidas como servicio social para los alumnos.",
+            "topics": [
+                "Brigadas",
+                "Afiliados"
+            ]
+        },
+        {
+            "title": "Karnet",
+            "description": "Publicaciones relacionadass con eventos válidos para el kanet estudiantil.",
+            "topics": [
+                "Eventos Deportivos",
+                "Eventos Culturales",
+                "Eventos Científicos"
+            ]
+        }
+    ]
+}

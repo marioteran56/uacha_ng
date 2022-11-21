@@ -8,51 +8,11 @@
             <li class="nav-item">
                 <a class="nav-link fs-5" style="color: #878787;">Categorias</a>
             </li>
-            <li>
+            <li *ngFor="let category of categories">
                 <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5" href="#">Facultades</a>
+                    <a class="nav-link fs-5" href="#">{{category.title}}</a>
                     <ul class="dropdown-menu shadow-sm">
-                        <li><a class="dropdown-item" href="#">Ingeniería</a></li>
-                        <li><a class="dropdown-item" href="#">Derecho</a></li>
-                        <li><a class="dropdown-item" href="#">Quimicas</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5" aria-current="page" href="#">Admisión</a>
-                    <ul class="dropdown-menu shadow-sm">
-                        <li><a class="dropdown-item" href="#">Inscripciones</a></li>
-                        <li><a class="dropdown-item" href="#">Becas</a></li>
-                        <li><a class="dropdown-item" href="#">Convocatorias</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5" aria-current="page" href="#">Prácticas</a>
-                    <ul class="dropdown-menu shadow-sm">
-                        <li><a class="dropdown-item" href="#">Asociados</a></li>
-                        <li><a class="dropdown-item" href="#">Laboratorios</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5" aria-current="page" href="#">Servicio Social</a>
-                    <ul class="dropdown-menu shadow-sm">
-                        <li><a class="dropdown-item" href="#">Brigadas</a></li>
-                        <li><a class="dropdown-item" href="#">Afiliados</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5" aria-current="page" href="#">Karnet</a>
-                    <ul class="dropdown-menu shadow-sm">
-                        <li><a class="dropdown-item" href="#">Eventos Deportivos</a></li>
-                        <li><a class="dropdown-item" href="#">Eventos Culturales</a></li>
-                        <li><a class="dropdown-item" href="#">Eventos Científicos</a></li>
+                        <li *ngFor="let topic of category.topics"><a class="dropdown-item" href="#">{{topic}}</a></li>
                     </ul>
                 </div>
             </li>

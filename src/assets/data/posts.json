@@ -10,7 +10,15 @@
                 "becas",
                 "alumnos",
                 "eventos"
-            ]
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
         },
         {
             "title": "Becas Extraordinarias",
@@ -22,7 +30,15 @@
                 "becas",
                 "alumnos",
                 "eventos"
-            ]
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
         },
         {
             "title": "Becas Extraordinarias",
@@ -34,7 +50,15 @@
                 "becas",
                 "alumnos",
                 "eventos"
-            ]
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
         },
         {
             "title": "Becas Extraordinarias",
@@ -46,7 +70,15 @@
                 "becas",
                 "alumnos",
                 "eventos"
-            ]
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
         },
         {
             "title": "Becas Extraordinarias",
@@ -58,7 +90,35 @@
                 "becas",
                 "alumnos",
                 "eventos"
-            ]
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
+        },
+        {
+            "title": "Becas Extraordinarias",
+            "content": "Publica UACH convocatoria para Becas extraordinarias Covid-19 Conoce más en facebook.",
+            "date": "20/10/2022",
+            "votes": 5,
+            "multimedia": "assets/images/becas.jpeg",
+            "tags": [
+                "becas",
+                "alumnos",
+                "eventos"
+            ],
+            "category": {
+                "title": "Admisión",
+                "description": "Publicaciones relacionadass con procesos de admisión u asuntos académicos.",
+                "topic": [
+                    "Becas",
+                    "Convocatorias"
+                ]
+            } 
         }
     ]
 }
