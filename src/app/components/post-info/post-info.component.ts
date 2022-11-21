@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-post-info',
@@ -11,8 +12,9 @@ import { PostsService } from 'src/app/services/posts.service';
 export class PostInfoComponent implements OnInit {
 
   post: any;
+  userInfo: any;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private postsService: PostsService) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private postsService: PostsService, private usersService: UsersService) {
     // customize default values of modals used by this component tree
 		config.backdrop = 'static';
 		config.keyboard = false;
@@ -22,10 +24,17 @@ export class PostInfoComponent implements OnInit {
     this.postsService.getPost().subscribe((res) => {
       this.post = <any[]>res.post;
     });
+    this.usersService.getUser().subscribe((res) => {
+      this.userInfo = <any[]>res.user;
+    });
   }
 
   openComments(content: any) {
 		this.modalService.open(content, { size: 'lg' });
 	}
+
+  openUserInfo(content: any) {
+    this.modalService.open(content);
+  }
 
 }

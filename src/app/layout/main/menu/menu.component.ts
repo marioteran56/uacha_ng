@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { TagsService } from 'src/app/services/tags.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  tags: any;
+  filterTags: String[] = [];
+
+  constructor(private http: HttpClient, private tagsService: TagsService) { }
 
   ngOnInit(): void {
+    this.tagsService.getTags().subscribe((res) => {
+      this.tags = <any>res.tags;
+    });
   }
 
+  changeTagState(tag: String) {
+    if(this.filterTags.includes(tag)) {
+      this.filterTags.splice(this.filterTags.indexOf(tag), 1);
+    } else {
+      this.filterTags.push(tag);
+    }
+  }
+
+  getNumberPct(value: any, total: any) {
+    return value / total * 100;
+  }
 }

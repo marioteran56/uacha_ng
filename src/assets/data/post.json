@@ -5,10 +5,46 @@
         "date": "20/10/2022",
         "votes": -5,
         "multimedia": "assets/images/becas.jpeg",
+        "user": {
+            "userName": "marioteran56",
+            "fullName": "Mario Alberto Terán Acosta",
+            "gender": "Masculino",
+            "birthDate": "20 Agosto, 2001",
+            "description": "Alumno de ciencias de la computación... Graduenme porfavor"
+        },
         "tags": [
             "becas",
             "alumnos",
             "eventos"
+        ],
+        "comments": [
+            {
+                "content": "No creo que todos los alumnos aprovechen estas becas...",
+                "date": "20 Noviembre, 2022",
+                "votes": 9,
+                "userName": "marioteran56",
+                "comments": [
+                    {
+                        "content": "Pues talvez nomas alumnos como tu",
+                        "date": "20 Noviembre, 2022",
+                        "votes": -3,
+                        "userName": "pineda24"
+                    },
+                    {
+                        "content": "Tienes algun problema?",
+                        "date": "20 Noviembre, 2022",
+                        "votes": 12,
+                        "userName": "marioteran56"
+                    }
+                ]
+            },
+            {
+                "content": "A mi me gustan mucho las galletas",
+                "date": "21 Noviembre, 2022",
+                "votes": 4,
+                "userName": "pineda24",
+                "comments": []
+            }
         ]
     }
 }

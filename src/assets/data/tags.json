@@ -1,0 +1,32 @@
+{
+    "tags": {
+        "tags": [
+            "becas",
+            "alumnos",
+            "eventos",
+            "karnet",
+            "laboratorios",
+            "estacionamiento",
+            "ingeniería",
+            "semanadeingeniería",
+            "derecho",
+            "conta",
+            "solicitudes"
+        ],
+        "popular": [
+            {
+                "tag": "becas",
+                "total": 46
+            },
+            {
+                "tag": "alumnos",
+                "total": 71
+            },
+            {
+                "tag": "eventos",
+                "total": 21
+            }
+        ],
+        "total": 121
+    }
+}

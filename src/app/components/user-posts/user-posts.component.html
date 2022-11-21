@@ -10,7 +10,7 @@
                 <button type="button" class="btn btn-outline-dark fs-6 mb-2">
                     <i class="bi bi-trash-fill"></i>
                 </button>
-                <button type="button" class="btn btn-outline-dark fs-6 ms-2 mb-2">
+                <button type="button" class="btn btn-outline-dark fs-6 ms-2 mb-2" (click)="open(content)">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
             </div>
@@ -25,32 +25,26 @@
                     <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{tag}} </small>
                   </div>
                 </div>
-                <a href="#" class="stretched-link"></a>
             </div>
         </div>
     </div>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-	<div class="modal-header border-0 ps-5 pe-5">
-		<h4 class="modal-title fs-4" id="modal-basic-title">Nueva Publicación</h4>
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Editar Publicación</h4>
 		<a class="btn btn-close" aria-label="Close" (click)="onUploadClose(); d('Cross click')"></a>
 	</div>
 	<div class="modal-body ps-5 pe-5">
         <div class="modal-img rounded">
-            <div *ngIf="uploaded; else fileUpload">
-                <p-image src={{imageUrl}} alt="Post Image" [preview]="true"></p-image>
-            </div>
-            <ng-template #fileUpload>
-                <p-fileUpload mode="basic" name="myfile[]" [customUpload]="true" (uploadHandler)="imageUpload($event)" chooseLabel="Agregar imagen" [style]="{'background-color': 'black'}"></p-fileUpload>
-            </ng-template>
+            <p-image src={{post.multimedia}} alt="Post Image" [preview]="true"></p-image>
         </div>
 		<div class="mt-4 mb-4">
             <h4 class="fs-5">Titulo</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título">
+            <input #postTitle type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título" value={{post.title}}>
         </div>
         <div class="mb-4">
             <h4 class="fs-5">Contenido</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación">
+            <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación" value={{post.content}}>
         </div>
         <div>
             <h4 class="fs-5">Tags</h4>
@@ -65,7 +59,7 @@
             </div>
         </div>
 	</div>
-	<div class="modal-footer border-0 ps-5 pe-5">
-        <button type="button" class="btn btn-dark fs-6" (click)="c('Save click')">Publicar</button>
+	<div class="modal-footer border-0 ps-5 pe-5 pb-5">
+        <button type="button" class="btn btn-dark fs-6" (click)="addPost(postTitle, postContent); deletePost(); c('Save click')">Publicar</button>
 	</div>
 </ng-template>

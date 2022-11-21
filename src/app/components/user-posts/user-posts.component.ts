@@ -14,6 +14,7 @@ export class UserPostsComponent implements OnInit {
   imageUrl: any;
   tags: String[] = [];
   posts: any[] = [];
+  post: any;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private postsService: PostsService) {
     // customize default values of modals used by this component tree
@@ -29,6 +30,10 @@ export class UserPostsComponent implements OnInit {
 
   open(content: any) {
 		this.modalService.open(content, { size: 'lg' });
+    this.postsService.getPost().subscribe((res) => {
+      this.post = <any>res.post;
+      this.tags = this.post.tags;
+    });
 	}
 
   imageUpload(event: any) {
@@ -57,4 +62,31 @@ export class UserPostsComponent implements OnInit {
   deleteTag(tag: String) {
     this.tags.splice(this.tags.indexOf(tag), 1);
   }
+
+  addPost(title: any, content: any) {
+    if(title.value != "" && content.value != "") {
+      this.postsService.postPost({
+        title: title.value,
+        content: content.value,
+        date: Date.now(),
+        votes: 0,
+        multimedia: this.imageUrl,
+        tags: this.tags
+      })
+      .subscribe(
+        data => {
+          if(data == 200) {
+            console.log("Publicación guardada con exito.");
+          } else {
+            console.log("Publicación no ha sido guardada.");
+          }
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
+  }
+
+  deletePost() {}
 }

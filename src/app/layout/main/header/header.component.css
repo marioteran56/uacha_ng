@@ -10,7 +10,11 @@
     border: none;
 }
 
-.dropdown-item:hover {
+.dropdown-item:hover, li {
     background-color: white;
     color: #5E2FBB;
+}
+
+a {
+    text-decoration: none;
 }

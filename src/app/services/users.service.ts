@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TagsService {
+export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getTags(): Observable<any> {
-    return this.http.get<any>('assets/data/tags.json');
+  getUser(): Observable<any> {
+    return this.http.get<any>('assets/data/user.json');
   }
 }

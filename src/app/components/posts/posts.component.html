@@ -1,7 +1,7 @@
 <div class="w-100 h-100">
     <div class="row pb-4">
         <div class="col-10">
-            <h3 class="fs-4 text-start"><span id="category" class="fw-light">Admisión/</span>Becas</h3>
+            <h3 class="fs-4 text-start"><span id="category" class="fw-light">{{posts[0].category.title}}/</span>{{posts[0].category.topic}}</h3>
         </div>
         <div class="col-2 d-flex justify-content-end">
             <button type="button" class="btn btn-dark fs-6" (click)="open(content)">+ Nuevo</button>
@@ -20,7 +20,7 @@
                     <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{tag}} </small>
                   </div>
                 </div>
-                <a href="#" class="stretched-link"></a>
+                <a routerLink="/postInfo" ariaCurrentWhenActive="page" class="stretched-link"></a>
             </div>
         </div>
     </div>
