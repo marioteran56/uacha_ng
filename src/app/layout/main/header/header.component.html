@@ -41,5 +41,54 @@
         <div class="pt-4 border-top fs-5">
             <p>{{userInfo.description}}</p>
         </div>
+        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="d('Cross click'); editUserInfo(editUser)">Editar</button>
+	</div>
+</ng-template>
+<ng-template #editUser let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Editar usuario</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <div class="mb-4">
+            <h4 class="fs-5">Nombre completo</h4>
+            <input [(ngModel)]="fullName" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su nombre completo">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Genero</h4>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn text-start ps-0 pe-0 border-bottom rounded-0" id="dropdownBasic1" style="color: #7a7a7a;" ngbDropdownToggle>
+                {{gender}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem (click)="changeGender('Masculino')">Masculino</button>
+                    <button ngbDropdownItem (click)="changeGender('Femenino')">Femenino</button>
+                    <button ngbDropdownItem (click)="changeGender('Otro')">Otro</button>
+                </div>
+            </div>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Fecha de cumpleaños</h4>
+            <form class="row row-cols-sm-auto">
+                <div class="col-12">
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            placeholder="yyyy-mm-dd"
+                            name="dp"
+                            [(ngModel)]="birthDate"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                        />
+                        <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Acerca de ti</h4>
+            <input [(ngModel)]="description" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba acerca de usted">
+        </div>
+        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="modifyUser(); d('Cross click')">Registrarse</button>
 	</div>
 </ng-template>

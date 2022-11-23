@@ -21,3 +21,11 @@
 .modal-body p {
     color: #3F3F3F;
 }
+
+h5 {
+    color: #3F3F3F;
+}
+
+.btn-outline-none {
+    border: none;
+}

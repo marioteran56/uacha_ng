@@ -1,0 +1,93 @@
+<div id="window" class="position-relative">
+    <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMin slice" viewBox="24 105 156 95" >
+        <defs>
+            <style type="text/css">
+                    @keyframes rotate {
+                         100% {
+                              transform: rotate(360deg)
+                         }
+                    }
+    
+                    .top-outer {
+                         transform-origin: 73px 69px;
+                         animation: rotate 30s linear infinite;
+                    }
+    
+                    .top-inner {
+                         transform-origin: 73px 69px;
+                         animation: rotate 20s linear infinite;
+                    }
+    
+                    .bottom-outer {
+                         transform-origin: 134px 222px;
+                         animation: rotate 30s linear infinite;
+                    }
+    
+                    .bottom-inner {
+                                    transform-origin: 134px  222px;
+                                    animation: rotate 20s linear infinite;
+                    }
+            </style>
+        </defs>
+        <rect x="0" y="0" width="300" height="300" fill="#5E2FBB"/>#E22227
+        <path class="top-outer" fill="#EF8716" stroke="#371300" stroke-width="1" d="M68 1c23,0 67,17 69,39 4,38 5,52 -5,69 -20,36 -68,46 -120,-9 -27,-28 -7,-101 56,-99z"/>
+        <path class="top-inner" fill="#537571" stroke="#371300" stroke-width="1" d="M69 22c33,-7 52,21 54,37 3,26 -1,28 -8,40 -15,25 -48,25 -85,-14 -19,-20 -4,-53 39,-63z"/>
+        <path class="bottom-outer" fill="#FDEF19" stroke="#371300" stroke-width="1" d="M158 158c30,13 56,50 44,75 -9,18 -22,46 -42,55 -20,10 -48,2 -73,-19 -29,-25 -27,-55 -9,-79 17,-22 43,-48 80,-32z"/>
+        <path class="bottom-inner" fill="#263D56" stroke="#371300" stroke-width="1" d="M136 180c32,-9 45,13 46,29 3,27 8,29 0,42 -14,25 -52,24 -79,0 -21,-18 -2,-61 33,-71z"/>
+    </svg>
+    <div id="card" class="rounded shadow bg-white container position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-start p-5 mt-5 mb-5">
+        <h3 class="fs-4 mb-5 text-start">Registro de Datos</h3>
+        <div class="mb-4">
+            <h4 class="fs-5">Correo electrónico</h4>
+            <input [(ngModel)]="email" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su correo electrónico">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Nombre de usuario</h4>
+            <input [(ngModel)]="userName" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su nombre de usuario">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Nombre completo</h4>
+            <input [(ngModel)]="fullName" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su nombre completo">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Genero</h4>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn text-start ps-0 pe-0 border-bottom rounded-0" id="dropdownBasic1" style="color: #7a7a7a;" ngbDropdownToggle>
+                {{gender}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem (click)="changeGender('Masculino')">Masculino</button>
+                    <button ngbDropdownItem (click)="changeGender('Femenino')">Femenino</button>
+                    <button ngbDropdownItem (click)="changeGender('Otro')">Otro</button>
+                </div>
+            </div>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Fecha de cumpleaños</h4>
+            <form class="row row-cols-sm-auto">
+                <div class="col-12">
+                    <div class="input-group">
+                        <input
+                            class="form-control"
+                            placeholder="yyyy-mm-dd"
+                            name="dp"
+                            [(ngModel)]="birthDate"
+                            ngbDatepicker
+                            #d="ngbDatepicker"
+                        />
+                        <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">About you</h4>
+            <input [(ngModel)]="description" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba acerca de usted">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Contraseña</h4>
+            <input [(ngModel)]="password" type="password" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su contraseña">
+        </div>
+        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="registerUser()">Registrarse</button>
+    </div>
+</div>

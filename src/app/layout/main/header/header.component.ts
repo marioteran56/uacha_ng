@@ -13,6 +13,10 @@ export class HeaderComponent implements OnInit {
 
   categories: any[] = [];
   userInfo: any;
+  gender: String = "Seleccione un género";
+  fullName: any;
+  birthDate: any;
+  description: any;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private categoriesService: CategoriesService, private usersService: UsersService) { }
 
@@ -27,5 +31,20 @@ export class HeaderComponent implements OnInit {
 
   openUserInfo(content: any) {
     this.modalService.open(content);
+  }
+
+  editUserInfo(content: any) {
+    this.modalService.open(content);
+  }
+
+  changeGender(value: String) {
+    this.gender = value;
+  }
+
+  modifyUser() {
+    if(this.fullName) JSON.stringify(this.fullName);
+    if(this.gender) JSON.stringify(this.gender);
+    if(this.birthDate) JSON.stringify(this.birthDate);
+    if(this.description) JSON.stringify(this.description);
   }
 }

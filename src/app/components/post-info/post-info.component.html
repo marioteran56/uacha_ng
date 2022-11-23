@@ -12,18 +12,23 @@
         </button>
         <div class="col-3 d-flex align-items-center justify-content-end">
             <div *ngIf="post.votes > 0; else negativeVotes">
-                <p class="fs-5 mt-3 me-2 text-success">+{{post.votes}}</p>
+                <p class="fs-6 mt-3 me-2 text-success">+{{post.votes}}</p>
             </div>
             <ng-template #negativeVotes>
-                <p class="fs-5 mt-3 me-2 text-danger">{{post.votes}}</p>
+                <p class="fs-6 mt-3 me-2 text-danger">{{post.votes}}</p>
             </ng-template>
-            <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-up"></i></button>
-            <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-down"></i></button>
+            <div class="btn-group" role="group" aria-label="Votes button group">
+                <input type="radio" class="btn-check" name="voteBtn" id="upVoteBtn" autocomplete="off">
+                <label #upVoteBtn class="btn btn-white btn-outline-none fs-5" for="upVoteBtn" (click)="upVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-up"></i></label>
+                <input type="radio" class="btn-check" name="voteBtn" id="downVoteBtn" autocomplete="off">
+                <label #downVoteBtn class="btn btn-white btn-outline-none fs-5" for="downVoteBtn" (click)="downVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-down"></i></label>
+            </div>
             <button type="button" class="btn btn-white fs-5" (click)="openComments(comments)"><i class="bi bi-chat"></i></button>
         </div>
     </div>
+    <h5 class="fs-6 fw-normal">{{post.date}}</h5>
     <div id="tags" class="row">
-        <div class="mt-3">
+        <div class="mt-2">
             <button *ngFor="let tag of post.tags" type="button" class="btn btn-dark me-2">#{{tag}}</button>
         </div>
     </div>
@@ -44,36 +49,50 @@
                 <button type="button" class="btn btn-dark fs-6 mt-3">Comentar</button>
             </div>
         </div>
-        <div *ngFor="let comment of post.comments" class="mb-4">
+        <div *ngFor="let comment of post.comments" class="mb-1">
             <div class="row">
-                <h4 class="col-9 fs-5 d-flex align-items-center justify-content-start mt-2">{{comment.userName}}</h4>
+                <div class="col-9 d-flex justify-content-start align-items-center">
+                    <h4 class="fs-5">{{comment.userName}}</h4>
+                    <p class="fs-6 fw-normal ps-2 mt-2">{{comment.date}}</p>
+                </div>
                 <div class="col-3 d-flex align-items-center justify-content-end">
                     <div *ngIf="comment.votes > 0; else negativeVotes">
-                        <p class="fs-5 mt-3 me-2 text-success">+{{comment.votes}}</p>
+                        <p class="fs-6 mt-3 me-2 text-success">+{{comment.votes}}</p>
                     </div>
                     <ng-template #negativeVotes>
-                        <p class="fs-5 mt-3 me-2 text-danger">{{comment.votes}}</p>
+                        <p class="fs-6 mt-3 me-2 text-danger">{{comment.votes}}</p>
                     </ng-template>
-                    <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-up"></i></button>
-                    <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-down"></i></button>
+                    <div class="btn-group" role="group" aria-label="Votes button group">
+                        <input type="radio" class="btn-check" name="voteBtn" id="upVoteBtn" autocomplete="off">
+                        <label #upVoteBtn class="btn btn-white btn-outline-none fs-5" for="upVoteBtn" (click)="upVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-up"></i></label>
+                        <input type="radio" class="btn-check" name="voteBtn" id="downVoteBtn" autocomplete="off">
+                        <label #downVoteBtn class="btn btn-white btn-outline-none fs-5" for="downVoteBtn" (click)="downVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-down"></i></label>
+                    </div>
                 </div>
             </div>
             <p class="fs-5">{{comment.content}}</p>
             <div class="d-flex">
-                <div class="vr"></div>
-                <div class="flex-fill ms-5">
+                <div class="vr ms-3 me-4"></div>
+                <div class="flex-fill">
                     <div *ngFor="let subComment of comment.comments">
                         <div class="row">
-                            <h4 class="col-9 fs-5 d-flex align-items-center justify-content-start mt-2">{{subComment.userName}}</h4>
+                            <div class="col-9 d-flex justify-content-start align-items-center">
+                                <h4 class="fs-5">{{subComment.userName}}</h4>
+                                <p class="fs-6 fw-normal ps-2 mt-2">{{subComment.date}}</p>
+                            </div>
                             <div class="col-3 d-flex align-items-center justify-content-end">
                                 <div *ngIf="subComment.votes > 0; else negativeVotes">
-                                    <p class="fs-5 mt-3 me-2 text-success">+{{subComment.votes}}</p>
+                                    <p class="fs-6 mt-3 me-2 text-success">+{{subComment.votes}}</p>
                                 </div>
                                 <ng-template #negativeVotes>
-                                    <p class="fs-5 mt-3 me-2 text-danger">{{subComment.votes}}</p>
+                                    <p class="fs-6 mt-3 me-2 text-danger">{{subComment.votes}}</p>
                                 </ng-template>
-                                <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-up"></i></button>
-                                <button type="button" class="btn btn-white fs-5"><i class="bi bi-chevron-down"></i></button>
+                                <div class="btn-group" role="group" aria-label="Votes button group">
+                                    <input type="radio" class="btn-check" name="voteBtn" id="upVoteBtn" autocomplete="off">
+                                    <label #upVoteBtn class="btn btn-white btn-outline-none fs-5" for="upVoteBtn" (click)="upVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-up"></i></label>
+                                    <input type="radio" class="btn-check" name="voteBtn" id="downVoteBtn" autocomplete="off">
+                                    <label #downVoteBtn class="btn btn-white btn-outline-none fs-5" for="downVoteBtn" (click)="downVote(upVoteBtn, downVoteBtn)"><i class="bi bi-chevron-down"></i></label>
+                                </div>
                             </div>
                         </div>
                         <p class="fs-5">{{subComment.content}}</p>

@@ -37,4 +37,15 @@ export class PostInfoComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  upVote(upVoteBtn: HTMLLabelElement, downVoteBtn: HTMLLabelElement) {
+    upVoteBtn.style.color = "#64f52b";
+    downVoteBtn.style.color = "#000000";
+  }
+
+  downVote(upVoteBtn: HTMLLabelElement, downVoteBtn: HTMLLabelElement) {
+    upVoteBtn.style.color = "#000000";
+    downVoteBtn.style.color = "#d11818";
+    
+  }
+
 }

@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ImageModule } from 'primeng/image';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { PostInfoComponent } from './components/post-info/post-info.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import { PostInfoComponent } from './components/post-info/post-info.component';
     MenuComponent,
     PostsComponent,
     UserPostsComponent,
-    PostInfoComponent
+    PostInfoComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +41,8 @@ import { PostInfoComponent } from './components/post-info/post-info.component';
     FileUploadModule,
     HttpClientModule,
     ImageModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
