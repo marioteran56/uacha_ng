@@ -22,8 +22,7 @@ export class PostInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.postsService.getPost().subscribe((res) => {
-      console.log(res);
-      this.post = res;
+      this.post = <any[]>res;
     });
     this.usersService.getUser().subscribe((res) => {
       this.userInfo = <any[]>res.user;
