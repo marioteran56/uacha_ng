@@ -14,6 +14,7 @@ export class PostsComponent implements OnInit {
   imageUrl: any;
   tags: String[] = [];
   posts: any[] = [];
+  existFiles: boolean = false;
 
   constructor(
     config: NgbModalConfig,
@@ -37,6 +38,14 @@ export class PostsComponent implements OnInit {
       });
     });
     // this.getPosts();
+  }
+
+  imageChangeEvent(files: File[]) {
+    if (files.length > 0) {
+      this.existFiles = true;
+    } else {
+      this.existFiles = false;
+    }
   }
 
   async getPosts(){

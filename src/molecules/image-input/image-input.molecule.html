@@ -1,0 +1,20 @@
+<div class="image-input-container {{this.inputStyle?this.inputStyle+'-component':''}}">
+  <ngx-dropzone (change)="onSelect($event)" accept="image/jpeg,image/jpg,image/png,image/webp" [multiple]="this.isMultiple" class="{{this.isMultiple?'multiple':''}}">
+    <ngx-dropzone-label>{{message}}</ngx-dropzone-label>
+    
+    <!-- <ng-template [ngIf]="preview" [ngIfElse]="elseBlock"> -->
+      <!-- <atom-image-container *ngFor="let f of files">
+        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" [file]="f" [removable]="true" (removed)="onRemove(f)">
+          <ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
+        </ngx-dropzone-image-preview>
+      </atom-image-container> -->
+    <!-- </ng-template> -->
+    <!-- <div *ngIf="preview; else elseBlock;">
+    </div> -->
+    <!-- <ng-template #elseBlock>
+      <div *ngIf="files.length!==0;">
+        <button class="btn btn-outline-light dropzone-cancel rounded-circle" (click)="onRemoveFirstOne();$event.stopPropagation()"><i class="bi bi-x"></i></button>
+      </div>
+    </ng-template> -->
+  </ngx-dropzone>
+</div>

@@ -19,6 +19,10 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
 
+// Form image
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ImageInputMolecule } from 'src/molecules/image-input/image-input.molecule';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +33,8 @@ import { FormsModule } from '@angular/forms';
     UserPostsComponent,
     PostInfoComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ImageInputMolecule
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,9 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     ImageModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgxDropzoneModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,155 @@
+.fill-component.image-input-container {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem ;
+  border-radius: 5px;
+}
+.fill-component.image-input-container::after {
+  position: absolute;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background: rgb(48,48,48);
+  background: -moz-linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  background: linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#303030",endColorstr="#1d1d1d",GradientType=1);
+}
+.fill-component ngx-dropzone{
+  position: absolute;
+  z-index: 12;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: calc(100% - 1rem);
+  height: calc(100% - 1rem);
+  background: none;
+  overflow: unset;
+  display: flex;
+  /* flex-direction: column;
+  justify-content: center;
+  justify-items: center; */
+}
+atom-image-container{
+  border-radius: 5px;
+  margin: 0.5rem;
+  box-shadow: inset 0 0 0 0.15rem #a6d5fa, rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+  background-color: rgba(213, 230, 247, 0.4);
+  height: calc(100% - 1rem);
+  width: 100%;
+}
+.fill-component atom-image-container{
+  box-shadow: none;
+  position: absolute;
+  z-index: -2;
+  background: none;
+  margin: 0;
+  height: calc(100% + 1rem + 4px);
+  width: calc(100% + 1rem + 4px);
+  top: calc(-0.5rem - 2px);
+  left: calc(-0.5rem - 2px);
+}
+.fill-component ngx-dropzone-image-preview{
+  margin: 0!important;
+  min-height: unset!important;
+  min-width: unset!important;
+  height: 100% !important;
+  width: 100% !important;
+  padding: 0.5rem;
+}
+::ng-deep .fill-component ngx-dropzone-image-preview>img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+  opacity: unset !important;
+  background: white;
+}
+::ng-deep .fill-component ngx-dropzone-image-preview::after {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background: rgb(48,48,48);
+  background: -moz-linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  background: linear-gradient(0deg, rgba(48,48,48,0.4) 0%, rgba(29,29,29,0.1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#303030",endColorstr="#1d1d1d",GradientType=1);
+}
+::ng-deep .fill-component ngx-dropzone-image-preview {
+  padding: 0.5rem!important;
+}
+::ng-deep .fill-component ngx-dropzone-image-preview ngx-dropzone-label{
+  position: relative;
+}
+::ng-deep .fill-component ngx-dropzone-image-preview ngx-dropzone-remove-badge{
+  z-index: 8;
+}
+.multiple atom-image-container{
+  min-width: 200px;
+  width: 200px;
+  max-width: 200px;
+}
+ngx-dropzone-label:not(.dropzone-cancel){
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  word-break: break-all;
+  margin: 5px 0px !important;
+  width: 100%;
+}
+.fill-component ngx-dropzone-label,
+ngx-dropzone-image-preview ngx-dropzone-label{
+  color: white;
+  font-size: smaller;
+  filter: drop-shadow(0px 0px 2px #000) drop-shadow(0px 0px 2px rgba(141, 141, 141, 0.071));
+}
+
+.dropzone-cancel{
+  position: relative;
+  aspect-ratio: 1;
+  /* width: 200%; */
+  z-index: 10;
+  padding: 1rem;
+  background: rgba(48, 48, 48, 0.5);
+}
+.dropzone-cancel:hover{
+  background: #313131;
+  color: white;
+}
+.dropzone-cancel>*{
+  font-size: 1.8rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.dropzone-cancel>*::before{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+/* .dropzone-cancel::after{
+  position: absolute;
+  z-index: 20;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.5);
+} */
