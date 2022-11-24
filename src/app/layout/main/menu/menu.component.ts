@@ -16,7 +16,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
     this.tagsService.getTags().subscribe((res) => {
-      this.tags = <any>res.tags;
+      // this.tags = <any>res.tags;
+      this.tags = res;
     });
   }
 
