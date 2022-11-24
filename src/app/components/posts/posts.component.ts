@@ -32,7 +32,7 @@ export class PostsComponent implements OnInit {
     this.postsService.getPosts().subscribe((res) => {
       // this.posts = <any[]>res;
       // console.log(res);
-      res.forEach((element:any) => {
+      res.forEach((element: any) => {
         console.log(element);
         this.posts.push(element);
       });
@@ -48,7 +48,7 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  async getPosts(){
+  async getPosts() {
     this.posts = [];
     await this.dateService.find('/posts').subscribe((res) => {
       res.forEach((element: any) => {
@@ -95,18 +95,32 @@ export class PostsComponent implements OnInit {
         .postPost({
           title: title.value,
           content: content.value,
-          date: Date.now(),
+          date: new Date(),
           votes: 0,
-          multimedia: this.imageUrl,
-          tags: this.tags,
+          categoryld: '637f1c9b65da3c71c2b3a0c2',
+          userld: '637efb0a61b0f8d7c35382a7',
+          multimedia:
+            'https://images.ecestaticos.com/ZDhbTLxrg_MvU7yF1vcmb4x4bEY=/144x0:2164x1515/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F462%2F155%2F108%2F462155108e372187abfa766023fd6c84.jpg',
+          // tags: this.tags,
         })
         .subscribe(
-          (data) => {
-            if (data == 200) {
-              console.log('Publicación guardada con exito.');
-            } else {
-              console.log('Publicación no ha sido guardada.');
+          async (data) => {
+            console.log(data);
+            for (let i = 0; i < this.tags.length; i++) {
+              this.postsService
+                .createTag({ postld: data._id, description: this.tags[i] })
+                .subscribe((obj) => {
+                  console.log(obj);
+                });
             }
+            // if (data == 200) {
+            //   for (let i = 0; i < this.tags.length; i++) {
+            //     this.postsService.createTag({ postld: data. , description:'' })
+            //   }
+            //   console.log('Publicación guardada con exito.');
+            // } else {
+            //   console.log('Publicación no ha sido guardada.');
+            // }
           },
           (err) => {
             console.log(err);
