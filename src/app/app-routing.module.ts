@@ -8,7 +8,7 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
 import { MainComponent } from './layout/main/main.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'posts', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '', component: MainComponent, children: [
     { path: 'posts', component: PostsComponent },
     { path: 'myPosts', component: UserPostsComponent },

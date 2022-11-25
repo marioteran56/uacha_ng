@@ -18,14 +18,13 @@ export class HeaderComponent implements OnInit {
   birthDate: any;
   description: any;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private categoriesService: CategoriesService, private usersService: UsersService) { }
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private categoriesService: CategoriesService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.categoriesService.getCategories().subscribe((res) => {
-      // this.categories = <any[]>res.categories;
       this.categories = <any[]>res;
     });
-    this.usersService.getUser().subscribe((res) => {
+    this.usersService.getUser("").subscribe((res) => {
       this.userInfo = <any[]>res.user;
     });
   }

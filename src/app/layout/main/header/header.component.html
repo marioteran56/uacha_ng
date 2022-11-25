@@ -4,18 +4,26 @@
 </div>
 <nav class="navbar navbar-expand-lg bg-white p-3 border-top border-bottom">
     <div class="collapse navbar-collapse">
-        <ul class="navbar-nav gap-5 btn-group">
+        <ul class="navbar-nav gap-5 btn-group w-100">
             <li class="nav-item">
                 <a class="nav-link fs-5" style="color: #878787;">Categorias</a>
             </li>
-            <li *ngFor="let category of categories">
-                <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <a class="nav-link fs-5">{{category.title}}</a>
-                    <ul class="dropdown-menu shadow-sm">
-                        <li *ngFor="let topic of category.topics"><a class="dropdown-item" routerLink="/posts" ariaCurrentWhenActive="page">{{topic}}</a></li>
-                    </ul>
-                </div>
+            <li *ngIf="categories.length == 0; else showCategories" class="placeholder-wave d-flex align-items-center w-100 gap-5">
+                <span class="placeholder col-1"></span>
+                <span class="placeholder col-1"></span>
+                <span class="placeholder col-1"></span>
+                <span class="placeholder col-1"></span>
             </li>
+            <ng-template #showCategories>
+                <li *ngFor="let category of categories">
+                    <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link fs-5">{{category.title}}</a>
+                        <ul class="dropdown-menu shadow-sm">
+                            <li *ngFor="let topic of category.topics"><a class="dropdown-item" routerLink="/posts" ariaCurrentWhenActive="page">{{category.topics}}</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ng-template>
         </ul>
     </div>
 </nav>

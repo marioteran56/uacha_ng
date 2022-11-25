@@ -35,17 +35,17 @@
         <path class="bottom-outer" fill="#FDEF19" stroke="#371300" stroke-width="1" d="M158 158c30,13 56,50 44,75 -9,18 -22,46 -42,55 -20,10 -48,2 -73,-19 -29,-25 -27,-55 -9,-79 17,-22 43,-48 80,-32z"/>
         <path class="bottom-inner" fill="#263D56" stroke="#371300" stroke-width="1" d="M136 180c32,-9 45,13 46,29 3,27 8,29 0,42 -14,25 -52,24 -79,0 -21,-18 -2,-61 33,-71z"/>
     </svg>
-    <div id="card" class="rounded shadow bg-white container position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-center p-5 mt-5 mb-5">
+    <div id="card" class="rounded shadow bg-white container position-absolute top-50 start-50 translate-middle d-flex flex-column justify-content-center align-items-center p-5">
         <img class="mb-2" alt="App Logo" src="assets/images/uacha.png" height="50vh"/>
         <div class="mt-5 mb-4">
             <h4 class="fs-5">Usuario</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su correo electrónico">
+            <input [(ngModel)]="userName" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su correo electrónico">
         </div>
         <div class="mb-5">
             <h4 class="fs-5">Contraseña</h4>
-            <input type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su contraseña">
+            <input [(ngModel)]="password" type="password" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba su contraseña">
         </div>
-        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;">Ingresar</button>
+        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="onLogin()">Ingresar</button>
         <a class="mt-2" routerLink="/register" ariaCurrentWhenActive="page">Registrarse</a>
     </div>
 </div>

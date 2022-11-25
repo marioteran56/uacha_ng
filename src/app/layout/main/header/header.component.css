@@ -18,3 +18,8 @@
 a {
     text-decoration: none;
 }
+
+.placeholder {
+    border-radius: 2rem;
+    color: #878787;
+}

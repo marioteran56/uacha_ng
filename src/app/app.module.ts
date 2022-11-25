@@ -48,8 +48,7 @@ import { ImageInputMolecule } from 'src/molecules/image-input/image-input.molecu
     ImageModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgxDropzoneModule,
-    
+    NgxDropzoneModule
   ],
   providers: [],
   bootstrap: [AppComponent]

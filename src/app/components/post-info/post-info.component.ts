@@ -30,7 +30,7 @@ export class PostInfoComponent implements OnInit {
       this.post = <any[]>res;
       console.log(res.comments);
     });
-    this.usersService.getUser().subscribe((res) => {
+    this.usersService.getUser("").subscribe((res) => {
       this.userInfo = <any[]>res.user;
     });
   }
