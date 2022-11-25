@@ -18,4 +18,8 @@ export class UsersService {
     return this.http.post<any>(environment.serverBaseURL + '/users/', user);
   }
 
+  login(objCredential: any){
+    return this.http.post<any>(environment.serverBaseURL + '/users/login',objCredential);
+  }
+
 }
