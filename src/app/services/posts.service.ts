@@ -22,7 +22,7 @@ export class PostsService {
 
   getPost(): Observable<any> {
     // return this.http.get<any>('assets/data/post.json');
-    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '637fec25655275c3a9211bba',{userld: '637efb0a61b0f8d7c35382a7'});
+    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '638119e528d5ad71843fbb0c',{userld: '637efb0a61b0f8d7c35382a7'});
   }
 
   postPost(post: any): Observable<any> {
