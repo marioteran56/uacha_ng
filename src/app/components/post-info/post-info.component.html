@@ -236,7 +236,7 @@
         placeholder="Escribe un comentario"
       />
       <div class="d-flex align-items-center justify-content-end">
-        <button type="button" class="btn btn-dark fs-6 mt-3">Comentar</button>
+        <button type="button" (click)="uploadComment(postContent,'');" class="btn btn-dark fs-6 mt-3">Comentar</button>
       </div>
     </div>
     <div *ngFor="let comment of post.comments" class="mb-1">
@@ -246,11 +246,11 @@
           <p class="fs-6 fw-normal ps-2 mt-2">{{ comment.date }}</p>
         </div>
         <div class="col-3 d-flex align-items-center justify-content-end">
-          <div *ngIf="comment.votes > 0; else negativeVotes">
-            <p class="fs-6 mt-3 me-2 text-success">+{{ comment.votes }}</p>
+          <div *ngIf="(comment.upVotes.length - comment.downVotes.length) > 0; else negativeVotes">
+            <p class="fs-6 mt-3 me-2 text-success">+{{ comment.upVotes.length - comment.downVotes.length }}</p>
           </div>
           <ng-template #negativeVotes>
-            <p class="fs-6 mt-3 me-2 text-danger">{{ comment.votes }}</p>
+            <p class="fs-6 mt-3 me-2 text-danger">{{ comment.upVotes.length - comment.downVotes.length }}</p>
           </ng-template>
           <div class="btn-group" role="group" aria-label="Votes button group">
             <input
@@ -262,9 +262,10 @@
             />
             <label
               #upVoteBtn
+              [ngStyle]="{'color':comment.hasVoteUp ? '#64f52b' : 'black'}"
               class="btn btn-white btn-outline-none fs-5"
               for="upVoteBtn"
-              (click)="upVote(upVoteBtn, downVoteBtn)"
+              (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(comment._id)"
               ><i class="bi bi-chevron-up"></i
             ></label>
             <input
@@ -276,9 +277,10 @@
             />
             <label
               #downVoteBtn
+              [ngStyle]="{'color':comment.hasDownVotes ? '#d11818' : 'black'}"
               class="btn btn-white btn-outline-none fs-5"
               for="downVoteBtn"
-              (click)="downVote(upVoteBtn, downVoteBtn)"
+              (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(comment._id)"
               ><i class="bi bi-chevron-down"></i
             ></label>
           </div>
@@ -297,14 +299,14 @@
                 <p class="fs-6 fw-normal ps-2 mt-2">{{ subComment.date }}</p>
               </div>
               <div class="col-3 d-flex align-items-center justify-content-end">
-                <div *ngIf="subComment.votes > 0; else negativeVotes">
+                <div *ngIf="(subComment.upVotes.length - subComment.downVotes.length) > 0; else negativeVotes">
                   <p class="fs-6 mt-3 me-2 text-success">
-                    +{{ subComment.votes }}
+                    +{{ (subComment.upVotes.length - subComment.downVotes.length) }}
                   </p>
                 </div>
                 <ng-template #negativeVotes>
                   <p class="fs-6 mt-3 me-2 text-danger">
-                    {{ subComment.votes }}
+                    {{ (subComment.upVotes.length - subComment.downVotes.length) }}
                   </p>
                 </ng-template>
                 <div
@@ -321,9 +323,10 @@
                   />
                   <label
                     #upVoteBtn
+                    [ngStyle]="{'color':subComment.hasVoteUp ? '#64f52b' : 'black'}"
                     class="btn btn-white btn-outline-none fs-5"
                     for="upVoteBtn"
-                    (click)="upVote(upVoteBtn, downVoteBtn)"
+                    (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(subComment._id)"
                     ><i class="bi bi-chevron-up"></i
                   ></label>
                   <input
@@ -335,9 +338,10 @@
                   />
                   <label
                     #downVoteBtn
+                    [ngStyle]="{'color':subComment.hasDownVotes ? '#d11818' : 'black'}"
                     class="btn btn-white btn-outline-none fs-5"
                     for="downVoteBtn"
-                    (click)="downVote(upVoteBtn, downVoteBtn)"
+                    (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(subComment._id)"
                     ><i class="bi bi-chevron-down"></i
                   ></label>
                 </div>
@@ -353,7 +357,7 @@
               placeholder="Escribe un comentario"
             />
             <div class="d-flex align-items-center justify-content-end">
-              <button type="button" class="btn btn-dark fs-6 mt-3">
+              <button type="button" class="btn btn-dark fs-6 mt-3" (click)="uploadComment(postContent,comment._id);">
                 Comentar
               </button>
             </div>

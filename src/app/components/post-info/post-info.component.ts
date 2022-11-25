@@ -28,6 +28,7 @@ export class PostInfoComponent implements OnInit {
   ngOnInit(): void {
     this.postsService.getPost().subscribe((res) => {
       this.post = <any[]>res;
+      console.log(res.comments);
     });
     this.usersService.getUser().subscribe((res) => {
       this.userInfo = <any[]>res.user;
@@ -47,8 +48,67 @@ export class PostInfoComponent implements OnInit {
     downVoteBtn.style.color = '#000000';
   }
 
+  addUpdateUpVote(idComment: string) {
+    console.log(idComment)
+    this.postsService
+      .saveComment('/comments/addVotesUp', {
+        commentld: idComment,
+        userld: '637efb0a61b0f8d7c35382a7',
+      })
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
+  addupdateDownVote(idComment: string) {
+    this.postsService
+      .saveComment('/comments/addDownVotes', {
+        commentld: idComment,
+        userld: '637efb0a61b0f8d7c35382a7',
+      })
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
   downVote(upVoteBtn: HTMLLabelElement, downVoteBtn: HTMLLabelElement) {
     upVoteBtn.style.color = '#000000';
     downVoteBtn.style.color = '#d11818';
+  }
+
+  uploadComment(comment: any, commentFather: string) {
+    if (comment.value && comment.value != '') {
+      console.log(commentFather);
+      let obj: any = {
+        content: comment.value,
+        postld: this.post._id,
+        userld: '637efb0a61b0f8d7c35382a7',
+        commentFather: '',
+      };
+      if (commentFather != '') {
+        obj.commentFather = commentFather;
+      } else {
+        delete obj.commentFather;
+      }
+      console.log(obj);
+      this.postsService.saveComment('/comments', obj).subscribe(
+        async (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

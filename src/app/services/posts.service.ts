@@ -15,15 +15,26 @@ export class PostsService {
     return this.http.get<any>(environment.serverBaseURL + '/posts');
   }
 
+  // getPost(): Observable<any> {
+  //   // return this.http.get<any>('assets/data/post.json');
+  //   return this.http.get<any>(environment.serverBaseURL + '/posts/' + '637fec25655275c3a9211bba');
+  // }
+
   getPost(): Observable<any> {
     // return this.http.get<any>('assets/data/post.json');
-    return this.http.get<any>(environment.serverBaseURL + '/posts/' + '637fb0d531e31a961cd38058');
+    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '637fec25655275c3a9211bba',{userld: '637efb0a61b0f8d7c35382a7'});
   }
 
   postPost(post: any): Observable<any> {
     console.log(post);
     // return this.http.post('assets/data/posts.json', post)
     return this.http.post(environment.serverBaseURL + '/posts', post)
+  }
+
+  saveComment(collection: string,obj: any): Observable<any> {
+    console.log(obj);
+    // return this.http.post('assets/data/posts.json', post)
+    return this.http.post(environment.serverBaseURL + collection , obj)
   }
 
   createTag(obj: any): Observable<any> {
