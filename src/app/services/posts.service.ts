@@ -16,7 +16,7 @@ export class PostsService {
 
   getPost(): Observable<any> {
     // return this.http.get<any>('assets/data/post.json');
-    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '638119e528d5ad71843fbb0c',{userld: '637efb0a61b0f8d7c35382a7'});
+    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '6381281f443794ed1d71d174',{userld: '63810905c105173b0df9950b'});
   }
 
   postPost(post: any): Observable<any> {

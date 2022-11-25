@@ -8,11 +8,10 @@ import { Md5 } from 'ts-md5';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-
-  gender: String = "Seleccione un género";
+  gender: String = 'Seleccione un género';
   fullName: any;
   email: any;
   birthDate: any;
@@ -20,34 +19,58 @@ export class RegisterComponent implements OnInit {
   userName: any;
   password: any;
 
-  constructor(private router: Router, private http: HttpClient, private usersService: UsersService) { }
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private usersService: UsersService
+  ) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   changeGender(value: String) {
     this.gender = value;
   }
 
   registerUser() {
-    if(this.fullName && this.email && this.gender && this.birthDate && this.description && this.userName && this.password) {
+    if (
+      this.fullName &&
+      this.email &&
+      this.gender &&
+      this.birthDate &&
+      this.description &&
+      this.userName &&
+      this.password
+    ) {
       this.usersService.getUser(this.userName).subscribe(
         (data) => {
-          if(!data) {
-            let hash = Md5.hashStr(this.password);
-            let birth = new Date(this.birthDate.year, this.birthDate.month - 1, this.birthDate.day);
-            let user = new User(this.fullName, this.email, this.gender, birth, this.description, this.userName, hash);
-            this.usersService.postUser(user).subscribe(
-              (data) => {
-                this.router.navigateByUrl('/login');
-              },
-              (err) => {
-                console.log(err);
-              }
+          if (!data) {
+            // let hash = Md5.hashStr(this.password);
+            let birth = new Date(
+              this.birthDate.year,
+              this.birthDate.month - 1,
+              this.birthDate.day
             );
+            // let user = new User(this.fullName, this.email, this.gender, birth, this.description, this.userName, hash);
+            this.usersService
+              .postUser({
+                fullName: this.fullName,
+                email: this.email,
+                gender: this.gender,
+                birthDate: birth,
+                description: this.description,
+                userName: this.userName,
+                password: this.password,
+              })
+              .subscribe(
+                (data) => {
+                  this.router.navigateByUrl('/login');
+                },
+                (err) => {
+                  console.log(err);
+                }
+              );
           } else {
-            console.log("User already exists!");
+            console.log('User already exists!');
           }
         },
         (err) => {
@@ -56,5 +79,4 @@ export class RegisterComponent implements OnInit {
       );
     }
   }
-
 }
