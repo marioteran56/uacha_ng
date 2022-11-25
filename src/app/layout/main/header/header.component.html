@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center p-3">
-    <a href="posts" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
+    <a href="posts/{{categories[0]._id}}/{{categories[0].topics[0]}}" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
     <button type="button" class="btn btn-white" (click)="openUserInfo(user)"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></button>
 </div>
 <nav class="navbar navbar-expand-lg bg-white p-3 border-top border-bottom">
@@ -19,7 +19,7 @@
                     <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <a class="nav-link fs-5">{{category.title}}</a>
                         <ul class="dropdown-menu shadow-sm">
-                            <li *ngFor="let topic of category.topics"><a class="dropdown-item" routerLink="/posts" ariaCurrentWhenActive="page">{{category.topics}}</a></li>
+                            <li *ngFor="let topic of category.topics"><a class="dropdown-item" (click)="reloadWindow(category._id, topic)">{{topic}}</a></li>
                         </ul>
                     </div>
                 </li>

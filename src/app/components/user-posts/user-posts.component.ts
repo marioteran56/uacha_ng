@@ -23,7 +23,7 @@ export class UserPostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postsService.getPosts().subscribe((res) => {
+    this.postsService.getPosts("", "").subscribe((res) => {
       this.posts = <any[]>res.posts;
     });
   }

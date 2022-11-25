@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
 import { DataService } from 'src/services/data.service';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { CategoriesService } from 'src/app/services/categories.service';
 
 @Component({
   selector: 'app-posts',
@@ -15,12 +18,16 @@ export class PostsComponent implements OnInit {
   tags: String[] = [];
   posts: any[] = [];
   existFiles: boolean = false;
+  category: any;
+  topic: any;
 
   constructor(
+    private route: ActivatedRoute,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private http: HttpClient,
     private postsService: PostsService,
+    private categoriesService: CategoriesService,
     private dateService: DataService
   ) {
     // customize default values of modals used by this component tree
@@ -29,15 +36,16 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postsService.getPosts().subscribe((res) => {
-      // this.posts = <any[]>res;
-      // console.log(res);
-      res.forEach((element: any) => {
-        console.log(element);
-        this.posts.push(element);
-      });
-    });
-    // this.getPosts();
+    this.getPosts();
+    this.categoriesService.getCategory(this.route.snapshot.paramMap.get('category')).subscribe(
+      (data) => {
+        this.category = data.title;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    this.topic = this.route.snapshot.paramMap.get('topic');
   }
 
   imageChangeEvent(files: File[]) {
@@ -50,7 +58,8 @@ export class PostsComponent implements OnInit {
 
   async getPosts() {
     this.posts = [];
-    await this.dateService.find('/posts').subscribe((res) => {
+    this.postsService.getPosts(this.route.snapshot.paramMap.get('category'), this.route.snapshot.paramMap.get('topic')).subscribe((res) => {
+      console.log(res)
       res.forEach((element: any) => {
         console.log(element);
         this.posts.push(element);
@@ -95,32 +104,22 @@ export class PostsComponent implements OnInit {
         .postPost({
           title: title.value,
           content: content.value,
-          date: new Date(),
-          votes: 0,
-          categoryld: '637f1c9b65da3c71c2b3a0c2',
-          userld: '637efb0a61b0f8d7c35382a7',
+          date: Date.now(),
+          categoryId: this.route.snapshot.paramMap.get('category'),
+          topic: this.topic,
+          userId: '63810905c105173b0df9950b',
           multimedia:
-            'https://images.ecestaticos.com/ZDhbTLxrg_MvU7yF1vcmb4x4bEY=/144x0:2164x1515/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F462%2F155%2F108%2F462155108e372187abfa766023fd6c84.jpg',
-          // tags: this.tags,
+            'https://images.ecestaticos.com/ZDhbTLxrg_MvU7yF1vcmb4x4bEY=/144x0:2164x1515/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F462%2F155%2F108%2F462155108e372187abfa766023fd6c84.jpg'
         })
         .subscribe(
           async (data) => {
-            console.log(data);
             for (let i = 0; i < this.tags.length; i++) {
               this.postsService
-                .createTag({ postld: data._id, description: this.tags[i] })
+                .createTag({ postId: data._id, description: this.tags[i] })
                 .subscribe((obj) => {
                   console.log(obj);
                 });
             }
-            // if (data == 200) {
-            //   for (let i = 0; i < this.tags.length; i++) {
-            //     this.postsService.createTag({ postld: data. , description:'' })
-            //   }
-            //   console.log('Publicación guardada con exito.');
-            // } else {
-            //   console.log('Publicación no ha sido guardada.');
-            // }
           },
           (err) => {
             console.log(err);

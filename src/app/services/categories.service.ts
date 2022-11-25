@@ -13,4 +13,8 @@ export class CategoriesService {
   getCategories(): Observable<any> {
     return this.http.get<any>(environment.serverBaseURL + '/categories');
   }
+
+  getCategory(id: any): Observable<any> {
+    return this.http.get<any>(environment.serverBaseURL + '/categories/' + id);
+  }
 }

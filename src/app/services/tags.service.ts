@@ -11,7 +11,6 @@ export class TagsService {
   constructor(private http: HttpClient) { }
 
   getTags(): Observable<any> {
-    // return this.http.get<any>('assets/data/tags.json');
     return this.http.get<any>(environment.serverBaseURL + '/tags/findTagsStadistics');
   }
 }

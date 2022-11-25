@@ -10,15 +10,9 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<any> {
-    // return this.http.get<any>('assets/data/posts.json');
-    return this.http.get<any>(environment.serverBaseURL + '/posts');
+  getPosts(category: any, topic: any): Observable<any> {
+    return this.http.get<any>(environment.serverBaseURL + `/posts/${category}/${topic}`);
   }
-
-  // getPost(): Observable<any> {
-  //   // return this.http.get<any>('assets/data/post.json');
-  //   return this.http.get<any>(environment.serverBaseURL + '/posts/' + '637fec25655275c3a9211bba');
-  // }
 
   getPost(): Observable<any> {
     // return this.http.get<any>('assets/data/post.json');
@@ -38,8 +32,6 @@ export class PostsService {
   }
 
   createTag(obj: any): Observable<any> {
-    console.log(obj);
-    // return this.http.post('assets/data/posts.json', post)
-    return this.http.post(environment.serverBaseURL + '/posts/addTags',obj);
+    return this.http.post(environment.serverBaseURL + '/posts/addTags', obj);
   }
 }

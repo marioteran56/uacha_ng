@@ -10,12 +10,12 @@ import { MainComponent } from './layout/main/main.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '', component: MainComponent, children: [
-    { path: 'posts', component: PostsComponent },
+    { path: 'posts/:category/:topic', component: PostsComponent },
     { path: 'myPosts', component: UserPostsComponent },
     { path: 'postInfo', component: PostInfoComponent }
   ]},
   { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
+  { path: 'register', component: RegisterComponent}
 ];
 
 @NgModule({

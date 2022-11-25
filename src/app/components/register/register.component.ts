@@ -4,7 +4,6 @@ import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 import { Md5 } from 'ts-md5';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-register',

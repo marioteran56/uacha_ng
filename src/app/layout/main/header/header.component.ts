@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
   birthDate: any;
   description: any;
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private categoriesService: CategoriesService, private usersService: UsersService) { }
+  constructor(private router: Router, config: NgbModalConfig, private modalService: NgbModal, private categoriesService: CategoriesService, private usersService: UsersService) { }
 
   ngOnInit(): void {
     this.categoriesService.getCategories().subscribe((res) => {
@@ -46,5 +47,11 @@ export class HeaderComponent implements OnInit {
     if(this.gender) JSON.stringify(this.gender);
     if(this.birthDate) JSON.stringify(this.birthDate);
     if(this.description) JSON.stringify(this.description);
+  }
+
+  reloadWindow(categoryId: String, topic: String) {
+    this.router.navigateByUrl(`/posts/${categoryId}/${topic}`).then(() => {
+      window.location.reload();
+    });
   }
 }
