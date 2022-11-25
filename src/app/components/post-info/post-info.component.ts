@@ -81,6 +81,22 @@ export class PostInfoComponent implements OnInit {
       );
   }
 
+  addUpdateVotesUpOrDownPost(postld: string,collection: string){
+    this.postsService
+      .saveComment(`/posts/${collection}`, {
+        postld: postld,
+        userld: '637efb0a61b0f8d7c35382a7',
+      })
+      .subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+  }
+
   downVote(upVoteBtn: HTMLLabelElement, downVoteBtn: HTMLLabelElement) {
     upVoteBtn.style.color = '#000000';
     downVoteBtn.style.color = '#d11818';

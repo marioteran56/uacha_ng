@@ -159,11 +159,11 @@
       </h5>
     </button>
     <div class="col-3 d-flex align-items-center justify-content-end">
-      <div *ngIf="post.votes > 0; else negativeVotes">
-        <p class="fs-6 mt-3 me-2 text-success">+{{ post.votes }}</p>
+      <div *ngIf="(post.upVotes.length - post.downVotes.length) > 0; else negativeVotes">
+        <p class="fs-6 mt-3 me-2 text-success">+{{ (post.upVotes.length - post.downVotes.length) }}</p>
       </div>
       <ng-template #negativeVotes>
-        <p class="fs-6 mt-3 me-2 text-danger">{{ post.votes }}</p>
+        <p class="fs-6 mt-3 me-2 text-danger">{{ (post.upVotes.length - post.downVotes.length) }}</p>
       </ng-template>
       <div class="btn-group" role="group" aria-label="Votes button group">
         <input
@@ -175,9 +175,10 @@
         />
         <label
           #upVoteBtn
+          [ngStyle]="{'color':post.hasVoteUp ? '#64f52b' : 'black'}"
           class="btn btn-white btn-outline-none fs-5"
           for="upVoteBtn"
-          (click)="upVote(upVoteBtn, downVoteBtn)"
+          (click)="upVote(upVoteBtn, downVoteBtn);addUpdateVotesUpOrDownPost(post._id,'addVotesUp')"
           ><i class="bi bi-chevron-up"></i
         ></label>
         <input
@@ -189,9 +190,10 @@
         />
         <label
           #downVoteBtn
+          [ngStyle]="{'color':post.hasDownVotes ? '#d11818' : 'black'}"
           class="btn btn-white btn-outline-none fs-5"
           for="downVoteBtn"
-          (click)="downVote(upVoteBtn, downVoteBtn)"
+          (click)="downVote(upVoteBtn, downVoteBtn);addUpdateVotesUpOrDownPost(post._id,'addDownVotes')"
           ><i class="bi bi-chevron-down"></i
         ></label>
       </div>
