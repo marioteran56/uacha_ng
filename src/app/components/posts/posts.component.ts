@@ -6,6 +6,7 @@ import { DataService } from 'src/services/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { CategoriesService } from 'src/app/services/categories.service';
+import { DataFirestoreService } from 'src/app/services/data.firestore.service';
 
 @Component({
   selector: 'app-posts',
@@ -28,7 +29,8 @@ export class PostsComponent implements OnInit {
     private http: HttpClient,
     private postsService: PostsService,
     private categoriesService: CategoriesService,
-    private dateService: DataService
+    private dateService: DataService,
+    private firebaseData: DataFirestoreService
   ) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
@@ -37,14 +39,16 @@ export class PostsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPosts();
-    this.categoriesService.getCategory(this.route.snapshot.paramMap.get('category')).subscribe(
-      (data) => {
-        this.category = data.title;
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    this.categoriesService
+      .getCategory(this.route.snapshot.paramMap.get('category'))
+      .subscribe(
+        (data) => {
+          this.category = data.title;
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     this.topic = this.route.snapshot.paramMap.get('topic');
   }
 
@@ -58,13 +62,18 @@ export class PostsComponent implements OnInit {
 
   async getPosts() {
     this.posts = [];
-    this.postsService.getPosts(this.route.snapshot.paramMap.get('category'), this.route.snapshot.paramMap.get('topic')).subscribe((res) => {
-      console.log(res)
-      res.forEach((element: any) => {
-        console.log(element);
-        this.posts.push(element);
+    this.postsService
+      .getPosts(
+        this.route.snapshot.paramMap.get('category'),
+        this.route.snapshot.paramMap.get('topic')
+      )
+      .subscribe((res) => {
+        console.log(res);
+        res.forEach((element: any) => {
+          console.log(element);
+          this.posts.push(element);
+        });
       });
-    });
   }
 
   open(content: any) {
@@ -79,6 +88,28 @@ export class PostsComponent implements OnInit {
     reader.onload = (_event) => {
       this.imageUrl = reader.result;
     };
+    this.onUpload(event);
+  }
+
+  inProgress: any;
+
+  onUpload(event: any) {
+    this.inProgress = true;
+    console.log('[ProfileComponent][onUpload]');
+    const file = event.files[0];
+    const path = `profile-pictures/${new Date().getTime()}`;
+    console.log(file);
+    this.firebaseData.uploadFile(path, file).then(
+      (result) => {
+        result.ref.getDownloadURL().then((photoUrl) => {
+          this.imageUrl = photoUrl;
+          console.log(photoUrl);
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onUploadClose() {
@@ -108,8 +139,7 @@ export class PostsComponent implements OnInit {
           categoryId: this.route.snapshot.paramMap.get('category'),
           topic: this.topic,
           userId: '63810905c105173b0df9950b',
-          multimedia:
-            'https://images.ecestaticos.com/ZDhbTLxrg_MvU7yF1vcmb4x4bEY=/144x0:2164x1515/1200x900/filters:fill(white):format(jpg)/f.elconfidencial.com%2Foriginal%2F462%2F155%2F108%2F462155108e372187abfa766023fd6c84.jpg'
+          multimedia: this.imageUrl,
         })
         .subscribe(
           async (data) => {

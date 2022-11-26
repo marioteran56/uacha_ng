@@ -23,6 +23,12 @@ import { FormsModule } from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ImageInputMolecule } from 'src/molecules/image-input/image-input.molecule';
 
+// Firebase
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +54,11 @@ import { ImageInputMolecule } from 'src/molecules/image-input/image-input.molecu
     ImageModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

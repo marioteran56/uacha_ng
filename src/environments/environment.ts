@@ -5,6 +5,14 @@
 export const environment = {
   production: false,
   serverBaseURL: "http://localhost:3000",
+  firebase: {
+    apiKey: "AIzaSyChtlVS5q4PmJsu_cFumdThUXhjAR-_CPo",
+    authDomain: "uacha-68be3.firebaseapp.com",
+    projectId: "uacha-68be3",
+    storageBucket: "uacha-68be3.appspot.com",
+    messagingSenderId: "1038397080936",
+    appId: "1:1038397080936:web:65b849931aad823058c2dd"
+  }
 };
 
 /*
