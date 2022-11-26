@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
               console.log('LogIn Success');
               console.log(data);
               localStorage.setItem('user',JSON.stringify(data));
-              this.router.navigateByUrl('/posts');
+              this.router.navigateByUrl('/myPosts');
             } else {
               console.log('No se encontró el usuario y/o contraseña.');
             }

@@ -18,6 +18,10 @@ export class UsersService {
     return this.http.post<any>(environment.serverBaseURL + '/users/', user);
   }
 
+  updateUser(username: string,user: Object): Observable<any> {
+    return this.http.put<any>(environment.serverBaseURL + `/users/${username}`, user);
+  }
+
   login(objCredential: any){
     return this.http.post<any>(environment.serverBaseURL + '/users/login',objCredential);
   }
