@@ -30,7 +30,7 @@ export class UserPostsComponent implements OnInit {
 
   open(content: any) {
 		this.modalService.open(content, { size: 'lg' });
-    this.postsService.getPost().subscribe((res) => {
+    this.postsService.getPost("").subscribe((res) => {
       this.post = <any>res.post;
       this.tags = this.post.tags;
     });

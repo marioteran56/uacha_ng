@@ -20,7 +20,7 @@
                     <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{tag}} </small>
                   </div>
                 </div>
-                <a routerLink="/postInfo" ariaCurrentWhenActive="page" class="stretched-link"></a>
+                <a routerLink="/postInfo/{{post._id}}" ariaCurrentWhenActive="page" class="stretched-link"></a>
             </div>
         </div>
     </div>

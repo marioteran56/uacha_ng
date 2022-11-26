@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', component: MainComponent, children: [
     { path: 'posts/:category/:topic', component: PostsComponent },
     { path: 'myPosts', component: UserPostsComponent },
-    { path: 'postInfo', component: PostInfoComponent }
+    { path: 'postInfo/:postId', component: PostInfoComponent }
   ]},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent}

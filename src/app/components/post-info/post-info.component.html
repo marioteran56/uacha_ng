@@ -132,21 +132,24 @@
         </div>
 	</div>
 </ng-template> -->
-
 <div class="col w-100 h-100">
-  <div class="row pb-4">
-    <h3 class="fs-4 text-start">{{ post.title }}</h3>
+  <div *ngIf="post; else noPostTitle" class="row pb-4">
+    <h3 class="fs-4 text-start">{{post.title}}</h3>
   </div>
+  <ng-template #noPostTitle class="row pb-4">
+    <p class="placeholder-wave d-flex align-items-center w-50 rounded">
+      <span class="placeholder col-12"></span>
+    </p>
+  </ng-template>
   <div class="row" id="post-img">
-    <p-image
-      src="{{ post.multimedia }}"
-      alt="Post Image"
-      [preview]="true"
-      [style]="{ width: '100%' }"
-      width="100%"
-    ></p-image>
+    <p-image *ngIf="post; else noPostImg"  src={{post.multimedia}} alt="Post Image" [preview]="true" [style]="{'width': '100%'}" width="100%"></p-image>
+    <ng-template #noPostImg class="w-100">
+      <p class="placeholder-wave w-100 h-100 rounded">
+        <span class="placeholder h-100 col-12"></span>
+      </p>
+    </ng-template>
   </div>
-  <div class="row fs-4 mt-4">
+  <div *ngIf="post; else noPostInfo" class="row fs-4 mt-4">
     <button
       type="button"
       class="btn btn-white col-9 d-flex text-dark align-items-center justify-content-start"
@@ -206,8 +209,8 @@
       </button>
     </div>
   </div>
-  <h5 class="fs-6 fw-normal">{{ post.date }}</h5>
-  <div id="tags" class="row">
+  <h5 *ngIf="post" class="fs-6 fw-normal">{{ post.date }}</h5>
+  <div *ngIf="post" id="tags" class="row">
     <div class="mt-2">
       <button
         *ngFor="let tag of post.tags"
@@ -218,9 +221,19 @@
       </button>
     </div>
   </div>
-  <div class="row mt-4">
+  <ng-template #noPostInfo class="row mt-4">
+    <p class="placeholder-wave d-flex align-items-center w-100 rounded">
+      <span class="placeholder col-12"></span>
+    </p>
+  </ng-template>
+  <div *ngIf="post; else noPostContent" class="row mt-4">
     <p class="fs-5">{{ post.content }}</p>
   </div>
+  <ng-template #noPostContent class="row mt-4">
+    <p class="placeholder-wave d-flex align-items-center w-75 rounded">
+      <span class="placeholder col-12"></span>
+    </p>
+  </ng-template>
 </div>
 
 <ng-template #comments let-c="close" let-d="dismiss">

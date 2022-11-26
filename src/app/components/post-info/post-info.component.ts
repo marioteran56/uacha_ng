@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -14,6 +15,7 @@ export class PostInfoComponent implements OnInit {
   userInfo: any;
 
   constructor(
+    private route: ActivatedRoute,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private http: HttpClient,
@@ -26,9 +28,9 @@ export class PostInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postsService.getPost().subscribe((res) => {
+    this.postsService.getPost(this.route.snapshot.paramMap.get('postId')).subscribe((res) => {
       this.post = <any[]>res;
-      console.log(res.comments);
+      console.log(res);
     });
     this.usersService.getUser("").subscribe((res) => {
       this.userInfo = <any[]>res.user;

@@ -14,9 +14,8 @@ export class PostsService {
     return this.http.get<any>(environment.serverBaseURL + `/posts/${category}/${topic}`);
   }
 
-  getPost(): Observable<any> {
-    // return this.http.get<any>('assets/data/post.json');
-    return this.http.post<any>(environment.serverBaseURL + '/posts/' + '6381281f443794ed1d71d174',{userld: '63810905c105173b0df9950b'});
+  getPost(postId: any): Observable<any> {
+    return this.http.get<any>(environment.serverBaseURL + '/posts/' + postId);
   }
 
   postPost(post: any): Observable<any> {
