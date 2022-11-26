@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
+import { TagsService } from 'src/app/services/tags.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -13,12 +14,12 @@ import { UsersService } from 'src/app/services/users.service';
 export class PostInfoComponent implements OnInit {
   post: any;
   userInfo: any;
+  tags: String[] = [];
 
   constructor(
     private route: ActivatedRoute,
     config: NgbModalConfig,
     private modalService: NgbModal,
-    private http: HttpClient,
     private postsService: PostsService,
     private usersService: UsersService
   ) {
@@ -29,8 +30,8 @@ export class PostInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.postsService.getPost(this.route.snapshot.paramMap.get('postId')).subscribe((res) => {
-      this.post = <any[]>res;
-      console.log(res);
+      this.post = <any[]>res[0];
+      console.log(this.post);
     });
     this.usersService.getUser("").subscribe((res) => {
       this.userInfo = <any[]>res.user;
@@ -128,5 +129,10 @@ export class PostInfoComponent implements OnInit {
         }
       );
     }
+  }
+
+  formatDate(date: string) {
+    const dateObj = new Date(date);
+    return dateObj.toDateString();
   }
 }

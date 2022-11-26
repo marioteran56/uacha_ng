@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { TagsService } from 'src/app/services/tags.service';
 
@@ -9,15 +8,18 @@ import { TagsService } from 'src/app/services/tags.service';
 })
 export class MenuComponent implements OnInit {
 
-  tags: any;
+  tags: any[] = [];
+  popularTags: any = [];
   filterTags: String[] = [];
 
-  constructor(private http: HttpClient, private tagsService: TagsService) { }
+  constructor(private tagsService: TagsService) { }
 
   ngOnInit(): void {
     this.tagsService.getTags().subscribe((res) => {
-      // this.tags = <any>res.tags;
-      this.tags = res;
+      this.tags = <any[]>res;
+    });
+    this.tagsService.getPopularTags().subscribe((res) => {
+      this.popularTags = <any[]>res;
     });
   }
 

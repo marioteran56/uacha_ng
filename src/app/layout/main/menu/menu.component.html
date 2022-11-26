@@ -1,32 +1,50 @@
 <div class="col border-start pt-1 pb-1 ps-5 pe-5 h-100 ms-4 w-100">
     <div class="row-6 text-start align-items-center">
         <h4 class="fs-5">Etiquetas Populares</h4>
-        <div id="tags" class="lh-lg pb-3 d-flex flex-wrap" style="color: #3F3F3F;">
-            <div *ngFor="let tag of tags.tags">
+        <div *ngIf="tags; else noTags" id="tags" class="lh-lg pb-3 d-flex flex-wrap" style="color: #3F3F3F;">
+            <div *ngFor="let tag of tags">
                 <div *ngIf="filterTags[filterTags.indexOf(tag)]; else noSelectedTag">
-                    <button class="btn btn-white p-0 pe-1" style="color: #5E2FBB;" (click)="changeTagState(tag)">#{{tag}}</button>
+                    <button class="btn btn-white p-0 pe-1" style="color: #5E2FBB;" (click)="changeTagState(tag)">#{{tag.description}}</button>
                 </div>
                 <ng-template #noSelectedTag>
-                    <button class="btn btn-white p-0 pe-1" (click)="changeTagState(tag)">#{{tag}}</button>
+                    <button class="btn btn-white p-0 pe-1" (click)="changeTagState(tag)">#{{tag.description}}</button>
                 </ng-template>
             </div>
         </div>
+        <ng-template #noTags>
+            <p class="placeholder-wave d-flex align-items-center w-50 rounded mt-4">
+                <span class="placeholder col-12"></span>
+            </p>  
+        </ng-template>
     </div>
     <hr/>
     <div class="row-6 text-start align-items-center">
         <h4 class="fs-5">Tendencias</h4>
-        <div *ngIf="tags.popular[0]" class="pb-3">
-            <p class="fs-6" style="color: #3F3F3F;">#{{tags.popular[0].tag}}</p>
-            <ngb-progressbar type="danger" [value]="getNumberPct(tags.popular[0].total, tags.total)" height="10px"></ngb-progressbar>  
+        <div *ngIf="popularTags; else noPopularTags">
+            <div *ngIf="popularTags.popular[0]" class="pb-3">
+                <p class="fs-6" style="color: #3F3F3F;">#{{popularTags.popular[0].tag}}</p>
+                <ngb-progressbar type="danger" [value]="getNumberPct(popularTags.popular[0].total, popularTags.total)" height="10px"></ngb-progressbar>  
+            </div>
+            <div *ngIf="popularTags.popular[1]" class="pb-3">
+                <p class="fs-6" style="color: #3F3F3F;">#{{popularTags.popular[1].tag}}</p>
+                <ngb-progressbar type="info" [value]="getNumberPct(popularTags.popular[1].total, popularTags.total)" height="10px"></ngb-progressbar>
+            </div>
+            <div *ngIf="popularTags.popular[2]" class="pb-3">
+                <p class="fs-6" style="color: #3F3F3F;">#{{popularTags.popular[2].tag}}</p>
+                <ngb-progressbar type="success" [value]="getNumberPct(popularTags.popular[2].total, popularTags.total)" height="10px"></ngb-progressbar>
+            </div>
         </div>
-        <div *ngIf="tags.popular[1]" class="pb-3">
-            <p class="fs-6" style="color: #3F3F3F;">#{{tags.popular[1].tag}}</p>
-            <ngb-progressbar type="info" [value]="getNumberPct(tags.popular[1].total, tags.total)" height="10px"></ngb-progressbar>
-        </div>
-        <div *ngIf="tags.popular[2]" class="pb-3">
-            <p class="fs-6" style="color: #3F3F3F;">#{{tags.popular[2].tag}}</p>
-            <ngb-progressbar type="success" [value]="getNumberPct(tags.popular[2].total, tags.total)" height="10px"></ngb-progressbar>
-        </div>
+        <ng-template #noPopularTags>
+            <p class="placeholder-wave d-flex align-items-center w-75 rounded mt-4">
+                <span class="placeholder col-12"></span>
+            </p>  
+            <p class="placeholder-wave d-flex align-items-center w-75 rounded mt-4">
+                <span class="placeholder col-12"></span>
+            </p>  
+            <p class="placeholder-wave d-flex align-items-center w-75 rounded mt-4">
+                <span class="placeholder col-12"></span>
+            </p>  
+        </ng-template>
     </div>
     <a routerLink="/myPosts" ariaCurrentWhenActive="page"><button classtype="button" class="btn btn-outline-dark mt-4">Mis Publicaciones</button></a>
 </div>

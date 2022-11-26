@@ -149,7 +149,7 @@
       </p>
     </ng-template>
   </div>
-  <div *ngIf="post; else noPostInfo" class="row fs-4 mt-4">
+  <div *ngIf="post; else noPostInfo" class="row fs-4 mt-2">
     <button
       type="button"
       class="btn btn-white col-9 d-flex text-dark align-items-center justify-content-start"
@@ -181,7 +181,7 @@
           [ngStyle]="{'color':post.hasVoteUp ? '#64f52b' : 'black'}"
           class="btn btn-white btn-outline-none fs-5"
           for="upVoteBtn"
-          (click)="upVote(upVoteBtn, downVoteBtn);addUpdateVotesUpOrDownPost(post._id,'addVotesUp')"
+          (click)="upVote(upVoteBtn, downVoteBtn); addUpdateVotesUpOrDownPost(post._id, 'addVotesUp')"
           ><i class="bi bi-chevron-up"></i
         ></label>
         <input
@@ -196,7 +196,7 @@
           [ngStyle]="{'color':post.hasDownVotes ? '#d11818' : 'black'}"
           class="btn btn-white btn-outline-none fs-5"
           for="downVoteBtn"
-          (click)="downVote(upVoteBtn, downVoteBtn);addUpdateVotesUpOrDownPost(post._id,'addDownVotes')"
+          (click)="downVote(upVoteBtn, downVoteBtn); addUpdateVotesUpOrDownPost(post._id,'addDownVotes')"
           ><i class="bi bi-chevron-down"></i
         ></label>
       </div>
@@ -209,7 +209,7 @@
       </button>
     </div>
   </div>
-  <h5 *ngIf="post" class="fs-6 fw-normal">{{ post.date }}</h5>
+  <h5 *ngIf="post" class="fs-6 fw-normal">{{ formatDate(post.date) }}</h5>
   <div *ngIf="post" id="tags" class="row">
     <div class="mt-2">
       <button
