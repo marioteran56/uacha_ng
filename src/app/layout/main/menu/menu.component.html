@@ -11,6 +11,7 @@
                 </ng-template>
             </div>
         </div>
+        <button *ngIf="tags" type="button" class="btn btn-outline-dark fs-6 mb-3 mt-2" (click)="filter()">Filtrar</button>
         <ng-template #noTags>
             <p class="placeholder-wave d-flex align-items-center w-50 rounded mt-4">
                 <span class="placeholder col-12"></span>

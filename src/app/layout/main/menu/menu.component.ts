@@ -11,6 +11,7 @@ export class MenuComponent implements OnInit {
   tags: any[] = [];
   popularTags: any = [];
   filterTags: String[] = [];
+  tagsArr: any;
 
   constructor(private tagsService: TagsService) { }
 
@@ -21,6 +22,18 @@ export class MenuComponent implements OnInit {
     this.tagsService.getPopularTags().subscribe((res) => {
       this.popularTags = <any[]>res;
     });
+    const obj: any = localStorage.getItem('tags');
+    if (obj) {
+      const tags = JSON.parse(obj);
+      this.tagsArr = [String];
+      if(tags) {
+        tags.forEach((element: any) => {
+          this.tagsArr.push(element.description);
+        });
+      }
+      this.tagsArr.shift();
+      console.log(this.tagsArr);
+    }
   }
 
   changeTagState(tag: String) {
@@ -30,6 +43,10 @@ export class MenuComponent implements OnInit {
       this.filterTags.push(tag);
     }
     localStorage.setItem('tags', JSON.stringify(this.filterTags));
+  }
+
+  filter() {
+    window.location.reload();
   }
 
   getNumberPct(value: any, total: any) {
