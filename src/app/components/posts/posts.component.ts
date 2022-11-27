@@ -40,12 +40,8 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('TAGSSSS');
     let objTags: any = localStorage.getItem('tags');
     this.tagsSelect = JSON.parse(objTags);
-    for (let i = 0; i < this.tagsSelect.length; i++) {
-      console.log(this.tagsSelect[i]);
-    }
     this.getPosts();
     this.categoriesService
       .getCategory(this.route.snapshot.paramMap.get('category'))
@@ -74,8 +70,6 @@ export class PostsComponent implements OnInit {
   }
 
   async getPosts() {
-    console.log(this.route.snapshot.paramMap.get('category'));
-    console.log(this.route.snapshot.paramMap.get('topic'));
     this.posts = [];
     this.postsService
       .getPostsWithMethodPost(
