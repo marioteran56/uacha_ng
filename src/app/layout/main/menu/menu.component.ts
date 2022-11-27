@@ -16,8 +16,10 @@ export class MenuComponent implements OnInit {
   constructor(private tagsService: TagsService) { }
 
   ngOnInit(): void {
-    this.tagsService.getTags().subscribe((res) => {
-      this.tags = <any[]>res;
+    this.tagsService.deleteNoReferencedTags().subscribe((res) => {
+      this.tagsService.getTags().subscribe((res) => {
+        this.tags = <any[]>res;
+      });
     });
     this.tagsService.getPopularTags().subscribe((res) => {
       this.popularTags = <any[]>res;
@@ -32,7 +34,6 @@ export class MenuComponent implements OnInit {
         });
       }
       this.tagsArr.shift();
-      console.log(this.tagsArr);
     }
   }
 
@@ -46,6 +47,12 @@ export class MenuComponent implements OnInit {
   }
 
   filter() {
+    window.location.reload();
+  }
+  
+  cleanFilters() {
+    this.filterTags = [];
+    localStorage.setItem('tags', JSON.stringify(this.filterTags));
     window.location.reload();
   }
 

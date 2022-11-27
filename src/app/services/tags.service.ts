@@ -17,4 +17,8 @@ export class TagsService {
   getPopularTags(): Observable<any> {
     return this.http.get<any>(environment.serverBaseURL + '/tags/findTagsStadistics');
   }
+
+  deleteNoReferencedTags(): Observable<any> {
+    return this.http.delete<any>(environment.serverBaseURL + '/tags');
+  }
 }
