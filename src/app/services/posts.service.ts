@@ -10,6 +10,10 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
+  getPostsWithMethodPost(category: any, topic: any,obj:any): Observable<any> {
+    return this.http.post<any>(environment.serverBaseURL + `/posts/filterTags/${category}/${topic}`,obj);
+  }
+
   getPosts(category: any, topic: any): Observable<any> {
     return this.http.get<any>(environment.serverBaseURL + `/posts/${category}/${topic}`);
   }

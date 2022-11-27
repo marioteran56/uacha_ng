@@ -23,6 +23,7 @@ export class PostsComponent implements OnInit {
   category: any;
   topic: any;
   userInfo: any;
+  tagsSelect: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +40,12 @@ export class PostsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('TAGSSSS');
+    let objTags: any = localStorage.getItem('tags');
+    this.tagsSelect = JSON.parse(objTags);
+    for (let i = 0; i < this.tagsSelect.length; i++) {
+      console.log(this.tagsSelect[i]);
+    }
     this.getPosts();
     this.categoriesService
       .getCategory(this.route.snapshot.paramMap.get('category'))
@@ -67,17 +74,31 @@ export class PostsComponent implements OnInit {
   }
 
   async getPosts() {
+    console.log(this.route.snapshot.paramMap.get('category'));
+    console.log(this.route.snapshot.paramMap.get('topic'));
     this.posts = [];
     this.postsService
-      .getPosts(
+      .getPostsWithMethodPost(
         this.route.snapshot.paramMap.get('category'),
-        this.route.snapshot.paramMap.get('topic')
+        this.route.snapshot.paramMap.get('topic'),
+        { tags: this.tagsSelect }
       )
       .subscribe((res) => {
         res.forEach((element: any) => {
           this.posts.push(element);
         });
       });
+
+    // this.postsService
+    //   .getPosts(
+    //     this.route.snapshot.paramMap.get('category'),
+    //     this.route.snapshot.paramMap.get('topic')
+    //   )
+    //   .subscribe((res) => {
+    //     res.forEach((element: any) => {
+    //       this.posts.push(element);
+    //     });
+    //   });
   }
 
   open(content: any) {
@@ -131,7 +152,7 @@ export class PostsComponent implements OnInit {
   }
 
   removeImage() {
-    this.imageUrl = "";
+    this.imageUrl = '';
     this.uploaded = false;
   }
 
