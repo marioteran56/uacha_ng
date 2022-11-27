@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
@@ -15,7 +14,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private usersService: UsersService
   ) {}
 
@@ -24,20 +22,17 @@ export class LoginComponent implements OnInit {
   onLogin() {
     if (this.userName && this.password) {
       this.usersService
-        .login({ userName: this.userName, password: this.password })
+        .login(this.userName)
         .subscribe(
           (data) => {
             if (data) {
-              // const hashedPassword = Md5.hashStr(this.password);
-              // if (data.password == hashedPassword) {
-              //   this.router.navigateByUrl('/posts');
-              // } else {
-              //   console.log('Contraseña incorrecta.');
-              // }
-              console.log('LogIn Success');
-              console.log(data);
+              const hashedPassword = Md5.hashStr(this.password);
+              if (data.password == hashedPassword) {
+                this.router.navigateByUrl('/myPosts');
+              } else {
+                console.log('Contraseña incorrecta.');
+              }
               localStorage.setItem('user',JSON.stringify(data));
-              this.router.navigateByUrl('/myPosts');
             } else {
               console.log('No se encontró el usuario y/o contraseña.');
             }

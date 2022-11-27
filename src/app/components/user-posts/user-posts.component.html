@@ -7,22 +7,22 @@
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div *ngFor="let post of posts" class="col">
             <div class="d-flex align-items-top justify-content-end">
-                <button type="button" class="btn btn-outline-dark fs-6 mb-2">
+                <button type="button" class="btn btn-outline-dark fs-6 mb-2" (click)="deletePost(post._id)">
                     <i class="bi bi-trash-fill"></i>
                 </button>
-                <button type="button" class="btn btn-outline-dark fs-6 ms-2 mb-2" (click)="open(content)">
+                <button type="button" class="btn btn-outline-dark fs-6 ms-2 mb-2" (click)="open(content, post)">
                     <i class="bi bi-pencil-fill"></i>
                 </button>
             </div>
             <div class="card border-bottom">
                 <div class="card-img">
-                    <img src="assets/images/becas.jpeg" class="card-img-top" alt="Post Image"/>
+                    <img src="{{ post.multimedia }}" class="card-img-top" alt="Post Image"/>
                 </div>
                 <div class="card-body pt-4">
-                  <h5 class="card-title">{{post.title}}</h5>
-                  <p class="card-text pb-3">{{post.content}}</p>
+                  <h5 class="card-title">{{ post.title }}</h5>
+                  <p class="card-text pb-3">{{ post.content }}</p>
                   <div class="card-footer pb-4">
-                    <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{tag}} </small>
+                    <small *ngFor="let tag of post.tags" class="fw-semibold text-start">#{{ tag }} </small>
                   </div>
                 </div>
             </div>
@@ -35,16 +35,24 @@
 		<a class="btn btn-close" aria-label="Close" (click)="onUploadClose(); d('Cross click')"></a>
 	</div>
 	<div class="modal-body ps-5 pe-5">
+        <div *ngIf="uploaded" class="w-100 d-flex align-items-center justify-content-end">
+            <button type="button" class="btn btn-dark btn-sm fs-6 ms-2 mb-2" (click)="removeImage()"><i class="bi bi-x-lg"></i></button>
+        </div>
         <div class="modal-img rounded">
-            <p-image src={{post.multimedia}} alt="Post Image" [preview]="true"></p-image>
+            <div *ngIf="uploaded; else fileUpload">
+                <p-image src="{{ imageUrl }}" alt="Post Image" [preview]="true"></p-image>
+            </div>
+            <ng-template #fileUpload>
+                <p-fileUpload mode="basic" name="myfile[]" [customUpload]="true" (uploadHandler)="imageUpload($event)" chooseLabel="Agregar imagen" [style]="{'background-color': 'black'}"></p-fileUpload>
+            </ng-template>
         </div>
 		<div class="mt-4 mb-4">
             <h4 class="fs-5">Titulo</h4>
-            <input #postTitle type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título" value={{post.title}}>
+            <input #postTitle type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba un título" value="{{ post.title }}">
         </div>
         <div class="mb-4">
             <h4 class="fs-5">Contenido</h4>
-            <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación" value={{post.content}}>
+            <input #postContent type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba el contenido de la publicación" value="{{ post.content }}">
         </div>
         <div>
             <h4 class="fs-5">Tags</h4>
@@ -60,6 +68,6 @@
         </div>
 	</div>
 	<div class="modal-footer border-0 ps-5 pe-5 pb-5">
-        <button type="button" class="btn btn-dark fs-6" (click)="addPost(postTitle, postContent); deletePost(); c('Save click')">Publicar</button>
+        <button type="button" class="btn btn-dark fs-6" (click)="updatePost(postTitle, postContent); c('Save click')">Editar</button>
 	</div>
 </ng-template>

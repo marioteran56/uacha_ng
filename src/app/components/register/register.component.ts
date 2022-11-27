@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
     private usersService: UsersService
   ) {}
 
@@ -44,13 +43,12 @@ export class RegisterComponent implements OnInit {
       this.usersService.getUser(this.userName).subscribe(
         (data) => {
           if (!data) {
-            // let hash = Md5.hashStr(this.password);
+            let hash = Md5.hashStr(this.password);
             let birth = new Date(
               this.birthDate.year,
               this.birthDate.month - 1,
               this.birthDate.day
             );
-            // let user = new User(this.fullName, this.email, this.gender, birth, this.description, this.userName, hash);
             this.usersService
               .postUser({
                 fullName: this.fullName,
@@ -59,7 +57,7 @@ export class RegisterComponent implements OnInit {
                 birthDate: birth,
                 description: this.description,
                 userName: this.userName,
-                password: this.password,
+                password: hash,
               })
               .subscribe(
                 (data) => {

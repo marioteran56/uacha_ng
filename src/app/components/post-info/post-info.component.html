@@ -251,130 +251,132 @@
         placeholder="Escribe un comentario"
       />
       <div class="d-flex align-items-center justify-content-end">
-        <button type="button" (click)="uploadComment(postContent,'');" class="btn btn-dark fs-6 mt-3">Comentar</button>
+        <button type="button" (click)="uploadComment(postContent, this.post._id);" class="btn btn-dark fs-6 mt-3">Comentar</button>
       </div>
     </div>
-    <div *ngFor="let comment of post.comments" class="mb-1">
-      <div class="row">
-        <div class="col-9 d-flex justify-content-start align-items-center">
-          <h4 class="fs-5">{{ comment.userName }}</h4>
-          <p class="fs-6 fw-normal ps-2 mt-2">{{ comment.date }}</p>
-        </div>
-        <div class="col-3 d-flex align-items-center justify-content-end">
-          <div *ngIf="(comment.upVotes.length - comment.downVotes.length) > 0; else negativeVotes">
-            <p class="fs-6 mt-3 me-2 text-success">+{{ comment.upVotes.length - comment.downVotes.length }}</p>
+    <div *ngIf="postComments">
+      <div *ngFor="let comment of postComments" class="mb-1">
+        <div class="row">
+          <div class="col-9 d-flex justify-content-start align-items-center">
+            <h4 class="fs-5">{{ comment.user.userName }}</h4>
+            <p class="fs-6 fw-normal ps-2 mt-2">{{ formatDate(comment.date) }}</p>
           </div>
-          <ng-template #negativeVotes>
-            <p class="fs-6 mt-3 me-2 text-danger">{{ comment.upVotes.length - comment.downVotes.length }}</p>
-          </ng-template>
-          <div class="btn-group" role="group" aria-label="Votes button group">
-            <input
-              type="radio"
-              class="btn-check"
-              name="voteBtn"
-              id="upVoteBtn"
-              autocomplete="off"
-            />
-            <label
-              #upVoteBtn
-              [ngStyle]="{'color':comment.hasVoteUp ? '#64f52b' : 'black'}"
-              class="btn btn-white btn-outline-none fs-5"
-              for="upVoteBtn"
-              (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(comment._id)"
-              ><i class="bi bi-chevron-up"></i
-            ></label>
-            <input
-              type="radio"
-              class="btn-check"
-              name="voteBtn"
-              id="downVoteBtn"
-              autocomplete="off"
-            />
-            <label
-              #downVoteBtn
-              [ngStyle]="{'color':comment.hasDownVotes ? '#d11818' : 'black'}"
-              class="btn btn-white btn-outline-none fs-5"
-              for="downVoteBtn"
-              (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(comment._id)"
-              ><i class="bi bi-chevron-down"></i
-            ></label>
-          </div>
-        </div>
-      </div>
-      <p class="fs-5">{{ comment.content }}</p>
-      <div class="d-flex">
-        <div class="vr ms-3 me-4"></div>
-        <div class="flex-fill">
-          <div *ngFor="let subComment of comment.comments">
-            <div class="row">
-              <div
-                class="col-9 d-flex justify-content-start align-items-center"
-              >
-                <h4 class="fs-5">{{ subComment.userName }}</h4>
-                <p class="fs-6 fw-normal ps-2 mt-2">{{ subComment.date }}</p>
-              </div>
-              <div class="col-3 d-flex align-items-center justify-content-end">
-                <div *ngIf="(subComment.upVotes.length - subComment.downVotes.length) > 0; else negativeVotes">
-                  <p class="fs-6 mt-3 me-2 text-success">
-                    +{{ (subComment.upVotes.length - subComment.downVotes.length) }}
-                  </p>
-                </div>
-                <ng-template #negativeVotes>
-                  <p class="fs-6 mt-3 me-2 text-danger">
-                    {{ (subComment.upVotes.length - subComment.downVotes.length) }}
-                  </p>
-                </ng-template>
-                <div
-                  class="btn-group"
-                  role="group"
-                  aria-label="Votes button group"
-                >
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="voteBtn"
-                    id="upVoteBtn"
-                    autocomplete="off"
-                  />
-                  <label
-                    #upVoteBtn
-                    [ngStyle]="{'color':subComment.hasVoteUp ? '#64f52b' : 'black'}"
-                    class="btn btn-white btn-outline-none fs-5"
-                    for="upVoteBtn"
-                    (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(subComment._id)"
-                    ><i class="bi bi-chevron-up"></i
-                  ></label>
-                  <input
-                    type="radio"
-                    class="btn-check"
-                    name="voteBtn"
-                    id="downVoteBtn"
-                    autocomplete="off"
-                  />
-                  <label
-                    #downVoteBtn
-                    [ngStyle]="{'color':subComment.hasDownVotes ? '#d11818' : 'black'}"
-                    class="btn btn-white btn-outline-none fs-5"
-                    for="downVoteBtn"
-                    (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(subComment._id)"
-                    ><i class="bi bi-chevron-down"></i
-                  ></label>
-                </div>
-              </div>
+          <div class="col-3 d-flex align-items-center justify-content-end">
+            <div *ngIf="(comment.upVotes.length - comment.downVotes.length) > 0; else negativeVotes">
+              <p class="fs-6 mt-3 me-2 text-success">+{{ comment.upVotes.length - comment.downVotes.length }}</p>
             </div>
-            <p class="fs-5">{{ subComment.content }}</p>
+            <ng-template #negativeVotes>
+              <p class="fs-6 mt-3 me-2 text-danger">{{ comment.upVotes.length - comment.downVotes.length }}</p>
+            </ng-template>
+            <div class="btn-group" role="group" aria-label="Votes button group">
+              <input
+                type="radio"
+                class="btn-check"
+                name="voteBtn"
+                id="upVoteBtn"
+                autocomplete="off"
+              />
+              <label
+                #upVoteBtn
+                [ngStyle]="{'color':comment.hasVoteUp ? '#64f52b' : 'black'}"
+                class="btn btn-white btn-outline-none fs-5"
+                for="upVoteBtn"
+                (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(comment._id)"
+                ><i class="bi bi-chevron-up"></i
+              ></label>
+              <input
+                type="radio"
+                class="btn-check"
+                name="voteBtn"
+                id="downVoteBtn"
+                autocomplete="off"
+              />
+              <label
+                #downVoteBtn
+                [ngStyle]="{'color':comment.hasDownVotes ? '#d11818' : 'black'}"
+                class="btn btn-white btn-outline-none fs-5"
+                for="downVoteBtn"
+                (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(comment._id)"
+                ><i class="bi bi-chevron-down"></i
+              ></label>
+            </div>
           </div>
-          <div>
-            <input
-              #postContent
-              type="text"
-              class="form-control-plaintext border-0 border-bottom ps-0"
-              placeholder="Escribe un comentario"
-            />
-            <div class="d-flex align-items-center justify-content-end">
-              <button type="button" class="btn btn-dark fs-6 mt-3" (click)="uploadComment(postContent,comment._id);">
-                Comentar
-              </button>
+        </div>
+        <p class="fs-5">{{ comment.content }}</p>
+        <div class="d-flex">
+          <div class="vr ms-3 me-4"></div>
+          <div class="flex-fill">
+            <div *ngFor="let subComment of comment.comments">
+              <div *ngIf="!checkForEmptyObj(subComment)" class="row">
+                <div
+                  class="col-9 d-flex justify-content-start align-items-center"
+                >
+                  <h4 class="fs-5">{{ subComment.user.userName }}</h4>
+                  <p class="fs-6 fw-normal ps-2 mt-2">{{ formatDate(subComment.date) }}</p>
+                </div>
+                <div class="col-3 d-flex align-items-center justify-content-end">
+                  <div *ngIf="(subComment.upVotes.length - subComment.downVotes.length) > 0; else negativeVotes">
+                    <p class="fs-6 mt-3 me-2 text-success">
+                      +{{ (subComment.upVotes.length - subComment.downVotes.length) }}
+                    </p>
+                  </div>
+                  <ng-template #negativeVotes>
+                    <p class="fs-6 mt-3 me-2 text-danger">
+                      {{ (subComment.upVotes.length - subComment.downVotes.length) }}
+                    </p>
+                  </ng-template>
+                  <div
+                    class="btn-group"
+                    role="group"
+                    aria-label="Votes button group"
+                  >
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="voteBtn"
+                      id="upVoteBtn"
+                      autocomplete="off"
+                    />
+                    <label
+                      #upVoteBtn
+                      [ngStyle]="{'color':subComment.hasVoteUp ? '#64f52b' : 'black'}"
+                      class="btn btn-white btn-outline-none fs-5"
+                      for="upVoteBtn"
+                      (click)="upVote(upVoteBtn, downVoteBtn);addUpdateUpVote(subComment._id)"
+                      ><i class="bi bi-chevron-up"></i
+                    ></label>
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="voteBtn"
+                      id="downVoteBtn"
+                      autocomplete="off"
+                    />
+                    <label
+                      #downVoteBtn
+                      [ngStyle]="{'color':subComment.hasDownVotes ? '#d11818' : 'black'}"
+                      class="btn btn-white btn-outline-none fs-5"
+                      for="downVoteBtn"
+                      (click)="downVote(upVoteBtn, downVoteBtn);addupdateDownVote(subComment._id)"
+                      ><i class="bi bi-chevron-down"></i
+                    ></label>
+                  </div>
+                </div>
+              </div>
+              <p class="fs-5">{{ subComment.content }}</p>
+            </div>
+            <div>
+              <input
+                #subComment
+                type="text"
+                class="form-control-plaintext border-0 border-bottom ps-0"
+                placeholder="Escribe un comentario"
+              />
+              <div class="d-flex align-items-center justify-content-end">
+                <button type="button" class="btn btn-dark fs-6 mt-3" (click)="uploadComment(subComment, comment._id);">
+                  Comentar
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -395,7 +397,7 @@
     </div>
     <div class="mb-4">
       <h4 class="fs-5">Cumpleaños</h4>
-      <p class="fs-5">{{ userInfo.birthDate }}</p>
+      <p class="fs-5">{{ formatDate(userInfo.birthDate) }}</p>
     </div>
     <div class="mb-4">
       <h4 class="fs-5">Genero</h4>

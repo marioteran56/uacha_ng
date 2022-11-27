@@ -45,7 +45,6 @@ export class ImageInputMolecule implements OnInit {
 
   
   customPreview(files: File[]) {
-    // console.log("SIUUUU:", file);
     const file=files[0];
     var mimeType = file.type;
     if (mimeType.match('image/*') == null) {
@@ -73,7 +72,6 @@ export class ImageInputMolecule implements OnInit {
   setImgURL(url: string | ArrayBuffer | null){
     if(url)
       return url;
-      // console.log(this.imgURL)
     return null;
   }
 }

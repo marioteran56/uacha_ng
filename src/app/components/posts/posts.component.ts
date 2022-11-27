@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { DataFirestoreService } from 'src/app/services/data.firestore.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-posts',
@@ -21,16 +22,16 @@ export class PostsComponent implements OnInit {
   existFiles: boolean = false;
   category: any;
   topic: any;
+  userInfo: any;
 
   constructor(
     private route: ActivatedRoute,
     config: NgbModalConfig,
     private modalService: NgbModal,
-    private http: HttpClient,
     private postsService: PostsService,
     private categoriesService: CategoriesService,
-    private dateService: DataService,
-    private firebaseData: DataFirestoreService
+    private firebaseData: DataFirestoreService,
+    private usersService: UsersService
   ) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
@@ -50,6 +51,11 @@ export class PostsComponent implements OnInit {
         }
       );
     this.topic = this.route.snapshot.paramMap.get('topic');
+    let obj: any = localStorage.getItem('user');
+    this.userInfo = JSON.parse(obj);
+    this.usersService.getUser(this.userInfo.userName).subscribe((res) => {
+      this.userInfo = <any[]>res;
+    });
   }
 
   imageChangeEvent(files: File[]) {
@@ -68,9 +74,7 @@ export class PostsComponent implements OnInit {
         this.route.snapshot.paramMap.get('topic')
       )
       .subscribe((res) => {
-        console.log(res);
         res.forEach((element: any) => {
-          console.log(element);
           this.posts.push(element);
         });
       });
@@ -95,15 +99,12 @@ export class PostsComponent implements OnInit {
 
   onUpload(event: any) {
     this.inProgress = true;
-    console.log('[ProfileComponent][onUpload]');
     const file = event.files[0];
     const path = `profile-pictures/${new Date().getTime()}`;
-    console.log(file);
     this.firebaseData.uploadFile(path, file).then(
       (result) => {
         result.ref.getDownloadURL().then((photoUrl) => {
           this.imageUrl = photoUrl;
-          console.log(photoUrl);
         });
       },
       (error) => {
@@ -129,6 +130,11 @@ export class PostsComponent implements OnInit {
     this.tags.splice(this.tags.indexOf(tag), 1);
   }
 
+  removeImage() {
+    this.imageUrl = "";
+    this.uploaded = false;
+  }
+
   addPost(title: any, content: any) {
     if (title.value != '' && content.value != '') {
       this.postsService
@@ -138,7 +144,7 @@ export class PostsComponent implements OnInit {
           date: Date.now(),
           categoryId: this.route.snapshot.paramMap.get('category'),
           topic: this.topic,
-          userId: '63810905c105173b0df9950b',
+          userId: this.userInfo._id,
           multimedia: this.imageUrl,
         })
         .subscribe(
@@ -150,6 +156,7 @@ export class PostsComponent implements OnInit {
                   console.log(obj);
                 });
             }
+            window.location.reload();
           },
           (err) => {
             console.log(err);

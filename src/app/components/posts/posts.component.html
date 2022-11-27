@@ -34,6 +34,9 @@
 		<a class="btn btn-close" aria-label="Close" (click)="onUploadClose(); d('Cross click')"></a>
 	</div>
 	<div class="modal-body ps-5 pe-5">
+        <div *ngIf="uploaded" class="w-100 d-flex align-items-center justify-content-end">
+            <button type="button" class="btn btn-dark btn-sm fs-6 ms-2 mb-2" (click)="removeImage()"><i class="bi bi-x-lg"></i></button>
+        </div>
         <div class="modal-img rounded">
             <div *ngIf="uploaded; else fileUpload">
                 <p-image src={{imageUrl}} alt="Post Image" [preview]="true"></p-image>

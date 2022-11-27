@@ -10,8 +10,8 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getUser(userName: String): Observable<any> {
-    return this.http.get<any>(environment.serverBaseURL + '/users/userName/' + userName);
+  getUser(userName: any): Observable<any> {
+    return this.http.get<any>(environment.serverBaseURL + '/users/' + userName);
   }
 
   postUser(user: Object): Observable<any> {
@@ -22,8 +22,8 @@ export class UsersService {
     return this.http.put<any>(environment.serverBaseURL + `/users/${username}`, user);
   }
 
-  login(objCredential: any){
-    return this.http.post<any>(environment.serverBaseURL + '/users/login',objCredential);
+  login(userName: any){
+    return this.http.get<any>(environment.serverBaseURL + '/users/login/' + userName);
   }
 
 }

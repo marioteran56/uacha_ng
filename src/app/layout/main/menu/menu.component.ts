@@ -29,6 +29,7 @@ export class MenuComponent implements OnInit {
     } else {
       this.filterTags.push(tag);
     }
+    localStorage.setItem('tags', JSON.stringify(this.filterTags));
   }
 
   getNumberPct(value: any, total: any) {

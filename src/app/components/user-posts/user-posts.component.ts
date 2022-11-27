@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
+import { UsersService } from 'src/app/services/users.service';
+import { DataFirestoreService } from 'src/app/services/data.firestore.service';
 
 @Component({
   selector: 'app-user-posts',
@@ -15,25 +17,34 @@ export class UserPostsComponent implements OnInit {
   tags: String[] = [];
   posts: any[] = [];
   post: any;
+  user: any
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private http: HttpClient, private postsService: PostsService) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private postsService: PostsService, private usersService: UsersService, private firebaseData: DataFirestoreService) {
     // customize default values of modals used by this component tree
 		config.backdrop = 'static';
 		config.keyboard = false;
   }
 
   ngOnInit(): void {
-    this.postsService.getPosts("", "").subscribe((res) => {
-      this.posts = <any[]>res.posts;
+    let obj: any = localStorage.getItem('user');
+    this.user = JSON.parse(obj);
+    this.usersService.getUser(this.user.userName).subscribe((res) => {
+      this.user = <any>res;
+      this.postsService.getPostsByUser(this.user._id).subscribe((res) => {
+        this.posts = <any[]>res;
+      });
     });
   }
 
-  open(content: any) {
+  open(content: any, post: any) {
+    this.post = post;
+    this.tags = post.tags;
+    this.imageUrl = post.multimedia
 		this.modalService.open(content, { size: 'lg' });
-    this.postsService.getPost("").subscribe((res) => {
-      this.post = <any>res.post;
-      this.tags = this.post.tags;
-    });
+    if (this.post.multimedia != "") {
+      this.uploaded = true;
+      this.imageUrl = this.post.multimedia;
+    }
 	}
 
   imageUpload(event: any) {
@@ -43,7 +54,26 @@ export class UserPostsComponent implements OnInit {
     reader.readAsDataURL(event.files[0]);
     reader.onload = (_event) => {
       this.imageUrl = reader.result;
-    }
+    };
+    this.onUpload(event);
+  }
+
+  inProgress: any;
+
+  onUpload(event: any) {
+    this.inProgress = true;
+    const file = event.files[0];
+    const path = `profile-pictures/${new Date().getTime()}`;
+    this.firebaseData.uploadFile(path, file).then(
+      (result) => {
+        result.ref.getDownloadURL().then((photoUrl) => {
+          this.imageUrl = photoUrl;
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   onUploadClose() {
@@ -63,30 +93,40 @@ export class UserPostsComponent implements OnInit {
     this.tags.splice(this.tags.indexOf(tag), 1);
   }
 
-  addPost(title: any, content: any) {
-    if(title.value != "" && content.value != "") {
-      this.postsService.postPost({
+  removeImage() {
+    this.post.multimedia = "";
+    this.imageUrl = "";
+    this.uploaded = false;
+  }
+
+  updatePost(title: any, content: any) {
+    this.postsService.updatePost(
+      this.post._id,
+      {
         title: title.value,
         content: content.value,
         date: Date.now(),
-        votes: 0,
         multimedia: this.imageUrl,
         tags: this.tags
       })
-      .subscribe(
-        data => {
-          if(data == 200) {
-            console.log("Publicación guardada con exito.");
-          } else {
-            console.log("Publicación no ha sido guardada.");
-          }
-        },
-        err => {
-          console.log(err);
-        }
-      );
-    }
+    .subscribe(
+      (data) => {
+        window.location.reload();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
-  deletePost() {}
+  deletePost(postId: any) {
+    this.postsService.deletePost(postId).subscribe(
+      (data) => {
+        window.location.reload();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 }

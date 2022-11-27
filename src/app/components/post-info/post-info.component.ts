@@ -5,6 +5,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
 import { TagsService } from 'src/app/services/tags.service';
 import { UsersService } from 'src/app/services/users.service';
+import { __asyncValues } from 'tslib';
 
 @Component({
   selector: 'app-post-info',
@@ -15,6 +16,8 @@ export class PostInfoComponent implements OnInit {
   post: any;
   userInfo: any;
   tags: String[] = [];
+  postComments: any[] = [];
+  user: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,14 +34,19 @@ export class PostInfoComponent implements OnInit {
   ngOnInit(): void {
     this.postsService.getPost(this.route.snapshot.paramMap.get('postId')).subscribe((res) => {
       this.post = <any[]>res[0];
-      console.log(this.post);
+      this.usersService.getUser(this.post.user.userName).subscribe((res) => {
+        this.userInfo = <any[]>res;
+      });
     });
-    this.usersService.getUser("").subscribe((res) => {
-      this.userInfo = <any[]>res.user;
+    let obj: any = localStorage.getItem('user');
+    this.user = JSON.parse(obj);
+    this.usersService.getUser(this.user.userName).subscribe((res) => {
+      this.user = <any>res;
     });
   }
 
   openComments(content: any) {
+    this.getPostComments();
     this.modalService.open(content, { size: 'lg' });
   }
 
@@ -51,16 +59,21 @@ export class PostInfoComponent implements OnInit {
     downVoteBtn.style.color = '#000000';
   }
 
-  addUpdateUpVote(idComment: string) {
-    console.log(idComment)
+  getPostComments() {
+    this.postsService.getPostComments(this.post._id).subscribe((res) => {
+      this.postComments = <any[]>res;
+    });
+  }
+
+  addUpdateUpVote(commentId: string) {
     this.postsService
       .saveComment('/comments/addVotesUp', {
-        commentld: idComment,
-        userld: '637efb0a61b0f8d7c35382a7',
+        commentId: commentId,
+        userId: this.user._id,
       })
       .subscribe(
         (data) => {
-          console.log(data);
+          window.location.reload();
         },
         (err) => {
           console.log(err);
@@ -68,15 +81,15 @@ export class PostInfoComponent implements OnInit {
       );
   }
 
-  addupdateDownVote(idComment: string) {
+  addupdateDownVote(commentId: string) {
     this.postsService
       .saveComment('/comments/addDownVotes', {
-        commentld: idComment,
-        userld: '637efb0a61b0f8d7c35382a7',
+        commentId: commentId,
+        userId: this.user._id,
       })
       .subscribe(
         (data) => {
-          console.log(data);
+          window.location.reload();
         },
         (err) => {
           console.log(err);
@@ -84,15 +97,15 @@ export class PostInfoComponent implements OnInit {
       );
   }
 
-  addUpdateVotesUpOrDownPost(postld: string,collection: string){
+  addUpdateVotesUpOrDownPost(postId: string, collection: string){
     this.postsService
       .saveComment(`/posts/${collection}`, {
-        postld: postld,
-        userld: '637efb0a61b0f8d7c35382a7',
+        postId: postId,
+        userId: this.user._id,
       })
       .subscribe(
         (data) => {
-          console.log(data);
+          window.location.reload();
         },
         (err) => {
           console.log(err);
@@ -107,22 +120,28 @@ export class PostInfoComponent implements OnInit {
 
   uploadComment(comment: any, commentFather: string) {
     if (comment.value && comment.value != '') {
-      console.log(commentFather);
-      let obj: any = {
-        content: comment.value,
-        postld: this.post._id,
-        userld: '637efb0a61b0f8d7c35382a7',
-        commentFather: '',
-      };
-      if (commentFather != '') {
-        obj.commentFather = commentFather;
+      let obj;
+      if(commentFather == this.post._id) {
+        obj = {
+          content: comment.value,
+          date: Date.now(),
+          postId: commentFather,
+          commentId: null,
+          userId: this.user._id
+        };
       } else {
-        delete obj.commentFather;
+        obj = {
+          content: comment.value,
+          date: Date.now(),
+          postId: null,
+          commentId: commentFather,
+          userId: this.user._id
+        };
       }
       console.log(obj);
       this.postsService.saveComment('/comments', obj).subscribe(
         async (data) => {
-          console.log(data);
+          window.location.reload();
         },
         (err) => {
           console.log(err);
@@ -134,5 +153,9 @@ export class PostInfoComponent implements OnInit {
   formatDate(date: string) {
     const dateObj = new Date(date);
     return dateObj.toDateString();
+  }
+
+  checkForEmptyObj(obj: Object) {
+    return JSON.stringify(obj) === '{}'
   }
 }

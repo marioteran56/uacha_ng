@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center p-3">
-    <a href="posts/{{categories[0]._id}}/{{categories[0].topics[0]}}" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
+    <a href="{{headerRef}}" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
     <button type="button" class="btn btn-white" (click)="openUserInfo(user)"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></button>
 </div>
 <nav class="navbar navbar-expand-lg bg-white p-3 border-top border-bottom">
@@ -17,7 +17,7 @@
             <ng-template #showCategories>
                 <li *ngFor="let category of categories">
                     <div class="nav-item dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <a class="nav-link fs-5">{{category.title}}</a>
+                        <a class="nav-link fs-5">{{ category.title }}</a>
                         <ul class="dropdown-menu shadow-sm">
                             <li *ngFor="let topic of category.topics"><a class="dropdown-item" (click)="reloadWindow(category._id, topic)">{{topic}}</a></li>
                         </ul>
@@ -25,6 +25,11 @@
                 </li>
             </ng-template>
         </ul>
+        <div *ngIf="userInfo && userInfo.userName == 'marioteran56'" class="d-flex align-items-center justify-content-end">
+            <button type="button" class="btn btn-dark btn-sm fs-6" (click)="openCategoriesPanel(addCategories)"><i class="bi bi-plus-lg"></i></button>
+            <button type="button" class="btn btn-dark btn-sm fs-6 ms-2" (click)="openCategoriesPanel(editCategories)"><i class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-dark btn-sm fs-6 ms-2" (click)="openCategoriesPanel(deleteCategories)"><i class="bi bi-trash-fill"></i></button>
+        </div>
     </div>
 </nav>
 <ng-template #user let-c="close" let-d="dismiss">
@@ -40,7 +45,7 @@
         </div>
         <div class="mb-4">
             <h4 class="fs-5">Cumpleaños</h4>
-            <p class="fs-5">{{userInfo.birthDate}}</p>
+            <p class="fs-5">{{ formatDate(userInfo.birthDate) }}</p>
         </div>
         <div class="mb-4">
             <h4 class="fs-5">Genero</h4>
@@ -49,7 +54,10 @@
         <div class="pt-4 border-top fs-5">
             <p>{{userInfo.description}}</p>
         </div>
-        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="d('Cross click'); editUserInfo(editUser)">Editar</button>
+        <div class="w-100 d-flex align-items-center justify-content-between pt-4">
+            <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="d('Cross click'); editUserInfo(editUser)">Editar</button>
+            <button type="button" class="btn btn-outline-dark btn-danger text-white" (click)="d('Cross click'); logout()">Salir</button>
+        </div>
 	</div>
 </ng-template>
 <ng-template #editUser let-c="close" let-d="dismiss">
@@ -97,6 +105,93 @@
             <h4 class="fs-5">Acerca de ti</h4>
             <input [(ngModel)]="description" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba acerca de usted">
         </div>
-        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="modifyUser(); d('Cross click')">Registrarse</button>
+        <button type="button" class="btn btn-outline-dark text-white" style="background-color: #5E2FBB;" (click)="modifyUser(); d('Cross click')">Actualizar</button>
+	</div>
+</ng-template>
+<ng-template #addCategories let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Agregar categoria</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <div class="mb-4">
+            <h4 class="fs-5">Categoria</h4>
+            <input #categoryTitle type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba la categoria">
+        </div>
+        <div class="mb-4">
+            <h4 class="fs-5">Topicos</h4>
+            <div class="d-flex align-items-center justify-content-start mb-3">
+                <div class="input-group" style="width: 170px;">
+                    <button class="btn fs-6 btn-dark fw-bold text-white" id="add-tag-btn" type="button" (click)="addTopic(topicInput);">+</button>
+                    <input #topicInput type="text" class="form-control" placeholder="Ej. Académico" aria-describedby="add-tag-btn">
+                </div>
+                <div id="tags" *ngFor="let topic of topics">
+                    <button type="button" class="btn btn-dark ms-1" (click)="deleteTopic(topic)">{{topic}}</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer border-0 p-0">
+            <button type="button" class="btn btn-dark" (click)="addCategory(categoryTitle.value); d('Cross click')">Agregar</button>
+        </div>
+	</div>
+</ng-template>
+<ng-template #editCategories let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Editar categoria</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <div class="mb-4">
+            <h4 class="fs-5">Categorias</h4>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn text-start ps-0 pe-0 border-bottom rounded-0" id="dropdownBasic1" style="color: #7a7a7a;" ngbDropdownToggle>
+                {{categoryName}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button *ngFor="let category of categories" ngbDropdownItem (click)="selectCategory(category)">{{category.title}}</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="category" class="mb-4">
+            <h4 class="fs-5">Categoria</h4>
+            <input [(ngModel)]="categoryName" type="text" class="form-control-plaintext border-0 border-bottom ps-0" placeholder="Escriba la categoria" value="{{categoryName}}">
+        </div>
+        <div *ngIf="category" class="mb-4">
+            <h4 class="fs-5">Topicos</h4>
+            <div class="d-flex align-items-center justify-content-start mb-3">
+                <div class="input-group" style="width: 170px;">
+                    <button class="btn fs-6 btn-dark fw-bold text-white" id="add-tag-btn" type="button" (click)="addTopic(topicInput);">+</button>
+                    <input #topicInput type="text" class="form-control" placeholder="Ej. Académico" aria-describedby="add-tag-btn">
+                </div>
+                <div id="tags" *ngFor="let topic of topics">
+                    <button type="button" class="btn btn-dark ms-1" (click)="deleteTopic(topic)">{{topic}}</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="category" class="modal-footer border-0 p-0">
+            <button type="button" class="btn btn-dark" (click)="editCategory(); d('Cross click')">Editar</button>
+        </div>
+	</div>
+</ng-template>
+<ng-template #deleteCategories let-c="close" let-d="dismiss">
+	<div class="modal-header border-0 ps-5 pe-5 pt-5">
+		<h4 class="modal-title fs-4" id="modal-basic-title">Eliminar categoria</h4>
+		<a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+	</div>
+	<div class="modal-body ps-5 pe-5 mb-4">
+        <div class="mb-4">
+            <h4 class="fs-5">Categorias</h4>
+            <div ngbDropdown class="d-inline-block">
+                <button type="button" class="btn text-start ps-0 pe-0 border-bottom rounded-0" id="dropdownBasic1" style="color: #7a7a7a;" ngbDropdownToggle>
+                {{categoryName}}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button *ngFor="let category of categories" ngbDropdownItem (click)="selectCategory(category)">{{category.title}}</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="category" class="modal-footer border-0 p-0">
+            <button type="button" class="btn btn-dark" (click)="deleteCategory(); d('Cross click')">Eliminar</button>
+        </div>
 	</div>
 </ng-template>
