@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
-import { Md5 } from 'ts-md5';
 
 @Component({
   selector: 'app-register',
@@ -43,7 +42,6 @@ export class RegisterComponent implements OnInit {
       this.usersService.getUser(this.userName).subscribe(
         (data) => {
           if (!data) {
-            let hash = Md5.hashStr(this.password);
             let birth = new Date(
               this.birthDate.year,
               this.birthDate.month - 1,
@@ -56,8 +54,9 @@ export class RegisterComponent implements OnInit {
                 gender: this.gender,
                 birthDate: birth,
                 description: this.description,
+                role: 'user',
                 userName: this.userName,
-                password: hash,
+                password: this.password,
               })
               .subscribe(
                 (data) => {

@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { environment } from '../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -92,6 +92,4 @@ export class DataService {
   countWithParams(collection: String, params: String) {
     return this.http.get<any>(environment.serverBaseURL  + collection + "?" + params);
   }
-
-
 }

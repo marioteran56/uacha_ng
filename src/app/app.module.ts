@@ -11,13 +11,14 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { MenubarModule } from 'primeng/menubar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileUploadModule } from 'primeng/fileupload';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ImageModule } from 'primeng/image';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
 import { PostInfoComponent } from './components/post-info/post-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { FormsModule } from '@angular/forms';
+import { TokenInterceptor } from './services/token.interceptor';
 
 // Form image
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -27,7 +28,10 @@ import { ImageInputMolecule } from 'src/molecules/image-input/image-input.molecu
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { environment } from '../environments/environment';
+import { environment } from '../environment/environment';
+import { AuthGuard } from './services/auth.guard';
+import { RoleGuard } from './services/role.guard';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,16 @@ import { environment } from '../environments/environment';
     AngularFireDatabaseModule,
     AngularFireStorageModule
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    RoleGuard,
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

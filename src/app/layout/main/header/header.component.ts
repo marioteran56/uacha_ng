@@ -5,6 +5,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { UsersService } from 'src/app/services/users.service';
 import { User } from '../../../models/user.model';
+import { Observable, OperatorFunction, debounceTime, distinctUntilChanged, map } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,10 @@ export class HeaderComponent implements OnInit {
   headerRef: String = "";
   category: any;
   topics: any[] = [];
+  users: any[] = [];
+  usersArray: any[] = [];
+  selectedUser: any;
+  selectedUserObj: any;
 
   constructor(
     private router: Router,
@@ -32,6 +37,12 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.usersService.getUsers().subscribe((res) => {
+      this.users = <any[]>res;
+      for (let i = 0; i < this.users.length; i++) {
+        this.usersArray.push(this.users[i].userName);
+      }
+    });
     this.categoriesService.getCategories().subscribe((res) => {
       this.categories = <any[]>res;
       this.headerRef = `posts/${this.categories[0]._id}/${this.categories[0].topics[0]}`
@@ -44,6 +55,11 @@ export class HeaderComponent implements OnInit {
   }
 
   openUserInfo(content: any) {
+    if (this.selectedUser) {
+      this.usersService.getUser(this.selectedUser).subscribe((res) => {
+        this.selectedUserObj = <any[]>res;
+      });
+    }
     this.modalService.open(content);
   }
 
@@ -148,6 +164,15 @@ export class HeaderComponent implements OnInit {
       localStorage.clear();
     });
   }
+
+  searchUsers: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
+		text$.pipe(
+			debounceTime(200),
+			distinctUntilChanged(),
+			map((term) =>
+				term.length < 2 ? [] : this.usersArray.filter((v) => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10),
+			),
+		);
 
   reloadWindow(categoryId: String, topic: String) {
     this.router.navigateByUrl(`/posts/${categoryId}/${topic}`).then(() => {

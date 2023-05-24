@@ -150,6 +150,17 @@ export class PostInfoComponent implements OnInit {
     }
   }
 
+  deleteComment(comment: any) {
+    this.postsService.deleteComment(comment._id).subscribe(
+      (data) => {
+        window.location.reload();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   formatDate(date: string) {
     const dateObj = new Date(date);
     return dateObj.toDateString();

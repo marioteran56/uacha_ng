@@ -1,6 +1,12 @@
 <div class="d-flex justify-content-between align-items-center p-3">
     <a href="{{headerRef}}" style="color: black;"><img alt="Uacha Logo" src="assets/images/uacha.png" height="30px"/></a>
-    <button type="button" class="btn btn-white" (click)="openUserInfo(user)"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></button>
+    <div class="d-flex align-items-center justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-dark fs-6" (click)="openUserInfo(customUser)">
+            <i class="bi bi-search"></i>
+        </button>
+        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="this.selectedUser" [ngbTypeahead]="searchUsers" placeholder="Busca un usuario" />
+        <button type="button" class="btn btn-white" (click)="openUserInfo(user)"><i class="bi bi-person-circle" style="font-size: 2rem;"></i></button>
+    </div>
 </div>
 <nav class="navbar navbar-expand-lg bg-white p-3 border-top border-bottom">
     <div class="collapse navbar-collapse">
@@ -25,7 +31,7 @@
                 </li>
             </ng-template>
         </ul>
-        <div *ngIf="userInfo && userInfo.userName == 'marioteran56'" class="d-flex align-items-center justify-content-end">
+        <div *ngIf="userInfo && userInfo.role == 'admin'" class="d-flex align-items-center justify-content-end">
             <button type="button" class="btn btn-dark btn-sm fs-6" (click)="openCategoriesPanel(addCategories)"><i class="bi bi-plus-lg"></i></button>
             <button type="button" class="btn btn-dark btn-sm fs-6 ms-2" (click)="openCategoriesPanel(editCategories)"><i class="bi bi-pencil-square"></i></button>
             <button type="button" class="btn btn-dark btn-sm fs-6 ms-2" (click)="openCategoriesPanel(deleteCategories)"><i class="bi bi-trash-fill"></i></button>
@@ -195,3 +201,27 @@
         </div>
 	</div>
 </ng-template>
+<ng-template #customUser let-c="close" let-d="dismiss">
+    <div class="modal-header border-0 ps-5 pe-5 pt-5">
+      <h4 class="modal-title fs-4" id="modal-basic-title">Acerca de</h4>
+      <a class="btn btn-close" aria-label="Close" (click)="d('Cross click')"></a>
+    </div>
+    <div class="modal-body ps-5 pe-5 mb-4">
+      <h4 class="fs-5 mb-3" style="color: #5e2fbb">{{ selectedUserObj.userName }}</h4>
+      <div class="mb-4">
+        <h4 class="fs-5">Nombre</h4>
+        <p class="fs-5">{{ selectedUserObj.fullName }}</p>
+      </div>
+      <div class="mb-4">
+        <h4 class="fs-5">Cumpleaños</h4>
+        <p class="fs-5">{{ formatDate(selectedUserObj.birthDate) }}</p>
+      </div>
+      <div class="mb-4">
+        <h4 class="fs-5">Genero</h4>
+        <p class="fs-5">{{ selectedUserObj.gender }}</p>
+      </div>
+      <div class="pt-4 border-top fs-5">
+        <p>{{ selectedUserObj.description }}</p>
+      </div>
+    </div>
+  </ng-template>

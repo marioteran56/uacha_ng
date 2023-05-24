@@ -11,7 +11,7 @@ export const environment = {
     projectId: "uacha-68be3",
     storageBucket: "uacha-68be3.appspot.com",
     messagingSenderId: "1038397080936",
-    appId: "1:1038397080936:web:65b849931aad823058c2dd"
+    appId: "1:1038397080936:web:3510dacbc2ee5a2358c2dd"
   }
 };
 

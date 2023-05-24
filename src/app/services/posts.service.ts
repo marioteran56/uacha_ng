@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
   getPostsWithMethodPost(category: any, topic: any,obj:any): Observable<any> {
-    return this.http.post<any>(environment.serverBaseURL + `/posts/filterTags/${category}/${topic}`,obj);
+    return this.http.post<any>(environment.serverBaseURL + `/posts/filterTags/${category}/${topic}`, obj);
   }
 
   getPosts(category: any, topic: any): Observable<any> {
@@ -61,5 +61,9 @@ export class PostsService {
 
   deletePost(postId: any): Observable<any> {
     return this.http.delete(environment.serverBaseURL + '/posts/' + postId);
+  }
+
+  deleteComment(commentId: any): Observable<any> {
+    return this.http.delete(environment.serverBaseURL + '/comments/' + commentId);
   }
 }

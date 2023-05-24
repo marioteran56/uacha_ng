@@ -21,18 +21,18 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (this.userName && this.password) {
+      const user = {
+        email: this.userName,
+        password: this.password,
+      }
       this.usersService
-        .login(this.userName)
+        .login(user)
         .subscribe(
-          (data) => {
-            if (data) {
-              const hashedPassword = Md5.hashStr(this.password);
-              if (data.password == hashedPassword) {
-                this.router.navigateByUrl('/myPosts');
-              } else {
-                console.log('Contraseña incorrecta.');
-              }
-              localStorage.setItem('user',JSON.stringify(data));
+          (res) => {
+            if (res) {
+              this.router.navigateByUrl('/myPosts');
+              const resUser = { ...res.user, token: res.token };
+              localStorage.setItem('user',JSON.stringify(resUser));
             } else {
               console.log('No se encontró el usuario y/o contraseña.');
             }

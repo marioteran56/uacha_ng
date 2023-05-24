@@ -11,15 +11,13 @@ export class MenuComponent implements OnInit {
   tags: any[] = [];
   popularTags: any = [];
   filterTags: String[] = [];
-  tagsArr: any;
+  tagsArr: String[] = [];
 
   constructor(private tagsService: TagsService) { }
 
   ngOnInit(): void {
-    this.tagsService.deleteNoReferencedTags().subscribe((res) => {
-      this.tagsService.getTags().subscribe((res) => {
-        this.tags = <any[]>res;
-      });
+    this.tagsService.getTags().subscribe((res) => {
+      this.tags = <any[]>res;
     });
     this.tagsService.getPopularTags().subscribe((res) => {
       this.popularTags = <any[]>res;
@@ -27,7 +25,6 @@ export class MenuComponent implements OnInit {
     const obj: any = localStorage.getItem('tags');
     if (obj) {
       const tags = JSON.parse(obj);
-      this.tagsArr = [String];
       if(tags) {
         tags.forEach((element: any) => {
           this.tagsArr.push(element.description);
